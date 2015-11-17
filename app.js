@@ -1,9 +1,16 @@
 var userLibrary = [];   // array of User objects
 
+var formInput = document.getElementById('newUser');
+
+
 function User (username, password) {
   this.username = username;
   this.password = password;
-  this.library = [];      // array of Note objects
+  this.library = [];
+  userLibrary.push(this);
+}  // array of Note objects
+
+      // array of Note objects
 
   // newNote (title, content)
   // this.library.push(new Note (title, content))
@@ -13,7 +20,6 @@ function User (username, password) {
   // populateBrowser()
   // for loop scans through library array, calls sendToBrowser(library[i])
 
-}
 
 function Note (noteTitle, noteContent, date) {
   this.noteTitle = noteTitle;
@@ -31,6 +37,42 @@ function Note (noteTitle, noteContent, date) {
   // JSON to save note in local storage
 }
 
+function validateForm(event) {
+    /*  var un = document.loginform.usr.value;
+      var pw = document.loginform.pword.value;*/
+  event.preventDefault();
+  var username = event.target.usr.value;
+  var password = event.target.pword.value;
+  console.log('username is' + username);
+  console.log('user password is' + password);
+  var temp = new User(username, password);
+  console.log('temp username' + temp.username);
+  console.log('temp password' + temp.password);
+
+
+  //userLibrary.push(temp);
+  console.log(userLibrary);
+}
+formInput.addEventListener('submit', validateForm);
+
+//need function to search for return user
+
+
+//call constructor to search array for username
+
+
+  // newNote (title, content)
+  // this.library.push(new Note (title, content))
+  // creates new note and pushes to user's library
+  // calls sendToBrowser to add to browser list
+
+  // populateBrowser()
+  // for loop scans through library array, calls sendToBrowser(library[i])
+
+
+
+
+
 function Notebook (note) {
   // this is a stretch goal
 }
@@ -38,7 +80,7 @@ function Notebook (note) {
 var NoteTracker = {
 
   // currentUser is assigned the User object that passes checkInfo?
-  currentUser: checkInfo(username, password);
+  //currentUser: checkInfo(username, password)
 
   // checkInfo (username, password) method here
   // for loop scans through userLibrary array
