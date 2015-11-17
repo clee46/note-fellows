@@ -33,9 +33,15 @@ function Notebook (note) {
 }
 
 var NoteTracker = {
+  getForm = document.getElementById('textInput');
+  submit = document.getElementById('submit');
+  newNote = document.getElementById('new'); // undefined right now becuase there is no new note button created yet
+  noteList = document.getElementById('noteList');
+  displayWindow = document.getElementById('displayWindow');
 
   // currentUser is assigned the User object that passes checkInfo?
   currentUser: checkInfo(username, password);
+
 
   // checkInfo (username, password) method here
   // for loop scans through userLibrary array
@@ -61,8 +67,12 @@ var NoteTracker = {
 
   // clearDisplay ()
   // removes the Node that displays current note
+  var clearContents = function () {
+    var remove = displayWindow.parentNode;
+    remove.removeChild(displayWindow);
+  }
 
-}
+};
 
 // Event listener for New User login form
 // var elNewUser = document.getElementById('newUser');
