@@ -70,6 +70,10 @@ var NoteTracker = {
   var clearContents = function () {
     var remove = displayWindow.parentNode;
     remove.removeChild(displayWindow);
+  },
+
+  var saveNote = function () {
+
   }
 
 };
