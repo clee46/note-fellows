@@ -73,6 +73,42 @@ formInput.addEventListener('submit', validateForm);
 
 
 
+function validateForm(event) {
+    /*  var un = document.loginform.usr.value;
+      var pw = document.loginform.pword.value;*/
+  event.preventDefault();
+  var username = event.target.usr.value;
+  var password = event.target.pword.value;
+  console.log('username is' + username);
+  console.log('user password is' + password);
+  var temp = new User(username, password);
+  console.log('temp username' + temp.username);
+  console.log('temp password' + temp.password);
+
+
+  //userLibrary.push(temp);
+  console.log(userLibrary);
+}
+formInput.addEventListener('submit', validateForm);
+
+//need function to search for return user
+
+
+//call constructor to search array for username
+
+
+  // newNote (title, content)
+  // this.library.push(new Note (title, content))
+  // creates new note and pushes to user's library
+  // calls sendToBrowser to add to browser list
+
+  // populateBrowser()
+  // for loop scans through library array, calls sendToBrowser(library[i])
+
+
+
+
+
 function Notebook (note) {
   // this is a stretch goal
 }
