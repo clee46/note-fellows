@@ -8,6 +8,10 @@ function User (username, password) {
   this.password = password;
   this.library = [];
   userLibrary.push(this);
+  this.newNote = function (title, content) {
+    var temp = new Note (title, content);
+    this.Library.push(temp);
+  }
 }  // array of Note objects
 
       // array of Note objects
@@ -76,6 +80,11 @@ function Notebook (note) {
 
 var NoteTracker = {
 
+getForm = document.getElementById('textInput');
+submit = document.getElementById('submit');
+newNote = document.getElementById('new'); // undefined right now becuase there is no new note button created yet
+noteList = document.getElementById('noteList');
+displayWindow = document.getElementById('displayWindow');
   // currentUser is assigned the User object that passes checkInfo?
   //currentUser: checkInfo(username, password)
 
@@ -103,8 +112,16 @@ var NoteTracker = {
 
   // clearDisplay ()
   // removes the Node that displays current note
+    var clearContents = function () {
+    var remove = displayWindow.parentNode;
+    remove.removeChild(displayWindow);
+  },
+// sends note to local storage
+  // var saveNote = function () {
+  //   currentUser.library.push()
+  // }
 
-}
+};
 
 // Event listener for New User login form
 // var elNewUser = document.getElementById('newUser');
