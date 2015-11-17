@@ -26,6 +26,9 @@ function Note (noteTitle, noteContent, date) {
 
   // displayNote ()
   // calls clear () first before displaying note
+
+  // saveNote ()
+  // JSON to save note in local storage
 }
 
 function Notebook (note) {
