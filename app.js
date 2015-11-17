@@ -1,9 +1,20 @@
 var userLibrary = [];   // array of User objects
 
+var formInput = document.getElementById('newUser');
+
+
 function User (username, password) {
   this.username = username;
   this.password = password;
-  this.library = [];      // array of Note objects
+  this.library = [];
+  userLibrary.push(this);
+  this.newNote = function (title, content) {
+    var temp = new Note (title, content);
+    this.Library.push(temp);
+  }
+}  // array of Note objects
+
+      // array of Note objects
 
   // newNote (title, content)
   // this.library.push(new Note (title, content))
@@ -13,7 +24,6 @@ function User (username, password) {
   // populateBrowser()
   // for loop scans through library array, calls sendToBrowser(library[i])
 
-}
 
 function Note (noteTitle, noteContent, date) {
   this.noteTitle = noteTitle;
@@ -28,14 +38,55 @@ function Note (noteTitle, noteContent, date) {
   // calls clear () first before displaying note
 }
 
+function validateForm(event) {
+    /*  var un = document.loginform.usr.value;
+      var pw = document.loginform.pword.value;*/
+  event.preventDefault();
+  var username = event.target.usr.value;
+  var password = event.target.pword.value;
+  console.log('username is' + username);
+  console.log('user password is' + password);
+  var temp = new User(username, password);
+  console.log('temp username' + temp.username);
+  console.log('temp password' + temp.password);
+
+
+  //userLibrary.push(temp);
+  console.log(userLibrary);
+}
+formInput.addEventListener('submit', validateForm);
+
+//need function to search for return user
+
+
+//call constructor to search array for username
+
+
+  // newNote (title, content)
+  // this.library.push(new Note (title, content))
+  // creates new note and pushes to user's library
+  // calls sendToBrowser to add to browser list
+
+  // populateBrowser()
+  // for loop scans through library array, calls sendToBrowser(library[i])
+
+
+
+
+
 function Notebook (note) {
   // this is a stretch goal
 }
 
 var NoteTracker = {
 
+getForm = document.getElementById('textInput');
+submit = document.getElementById('submit');
+newNote = document.getElementById('new'); // undefined right now becuase there is no new note button created yet
+noteList = document.getElementById('noteList');
+displayWindow = document.getElementById('displayWindow');
   // currentUser is assigned the User object that passes checkInfo?
-  currentUser: checkInfo(username, password);
+  //currentUser: checkInfo(username, password)
 
   // checkInfo (username, password) method here
   // for loop scans through userLibrary array
@@ -61,8 +112,16 @@ var NoteTracker = {
 
   // clearDisplay ()
   // removes the Node that displays current note
+    var clearContents = function () {
+    var remove = displayWindow.parentNode;
+    remove.removeChild(displayWindow);
+  },
+// sends note to local storage
+  // var saveNote = function () {
+  //   currentUser.library.push()
+  // }
 
-}
+};
 
 // Event listener for New User login form
 // var elNewUser = document.getElementById('newUser');
