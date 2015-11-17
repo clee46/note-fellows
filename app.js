@@ -54,7 +54,7 @@ function validateForm(event) {
   //userLibrary.push(temp);
   console.log(userLibrary);
 }
-formInput.addEventListener('submit', validateForm);
+/*formInput.addEventListener('submit', validateForm);*/
 
 //need function to search for return user
 
@@ -80,11 +80,11 @@ function Notebook (note) {
 
 var NoteTracker = {
 
-getForm = document.getElementById('textInput');
-submit = document.getElementById('submit');
-newNote = document.getElementById('new'); // undefined right now becuase there is no new note button created yet
-noteList = document.getElementById('noteList');
-displayWindow = document.getElementById('displayWindow');
+/*textInput: document.getElementById('textInput'),
+submit: document.getElementById('submit'),
+newNote: document.getElementById('new'), // undefined right now becuase there is no new note button created yet
+noteList: document.getElementById('noteList'),
+displayWindow: document.getElementById('displayWindow'),*/
   // currentUser is assigned the User object that passes checkInfo?
   //currentUser: checkInfo(username, password)
 
@@ -112,14 +112,40 @@ displayWindow = document.getElementById('displayWindow');
 
   // clearDisplay ()
   // removes the Node that displays current note
-    var clearContents = function () {
-    var remove = displayWindow.parentNode;
-    remove.removeChild(displayWindow);
+    clearContent: function () {
+      var form = document.getElementById('textInput');
+      var container = form.parentNode;
+      container.removeChild(form);
+      /*console.log(remove);*/
   },
 // sends note to local storage
   // var saveNote = function () {
   //   currentUser.library.push()
   // }
+  createContent: function() {
+    this.clearContent();
+    document.getElementById('displayWindow').innerHTML = '<form id="textInput"><fieldset><label for="noteTitle">Title</label><input type="text" name="noteTitle"/><label for="noteContent">Content</label><input type="text" name="noteContent"/><input class="button-primary" type="submit" value="Create New Note"></fieldset></form>';
+    /*var createForm = document.createElement('form');
+    createForm.id = 'textInput';
+    this.displayWindow.appendChild(createForm);
+    console.log(displayWindow);*/
+    /*var getForm = document.getElementsByTagName('form');
+    console.log(getForm);
+    getForm[0].setAttribute('id', 'textInput');*/
+
+    /*var createFieldSet = document.createElement('fieldset');
+    console.log(createFieldSet);
+    createFieldSet.id = 'fieldset';
+    this.textInput.appendChild(createFieldSet);
+    var createLabel = document.createElement('label');
+    console.log(createLabel);
+    createLabel.setAttribute('for', 'noteTitle');
+    createFieldSet.appendChild(createLabel);
+    var createInput = document.createElement('input');
+    console.log(createInput);
+    createInput.setAttribute('type', 'text');
+    createInput.setAttribute('name', 'noteTitle');*/
+}
 
 };
 
