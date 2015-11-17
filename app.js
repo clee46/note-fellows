@@ -1,7 +1,10 @@
 var userLibrary = [];   // array of User objects
 
-var formInput = document.getElementById('newUser');
+var newFormInput = document.getElementById('newUser');
+var returnFormInput = document.getElementById('returnUser');
 
+
+//we need to account for switching users
 
 function User (username, password) {
   this.username = username;
@@ -41,23 +44,44 @@ function Note (noteTitle, noteContent, date) {
   // JSON to save note in local storage
 }
 
-function validateForm(event) {
+function newUser(event) {
     /*  var un = document.loginform.usr.value;
       var pw = document.loginform.pword.value;*/
   event.preventDefault();
   var username = event.target.usr.value;
   var password = event.target.pword.value;
-  console.log('username is' + username);
-  console.log('user password is' + password);
   var temp = new User(username, password);
-  console.log('temp username' + temp.username);
-  console.log('temp password' + temp.password);
-
-
-  //userLibrary.push(temp);
-  console.log(userLibrary);
 }
-formInput.addEventListener('submit', validateForm);
+newFormInput.addEventListener('submit', newUser);
+
+function returnUser(event) {
+    /*  var un = document.loginform.usr.value;
+      var pw = document.loginform.pword.value;*/
+  event.preventDefault();
+  var username = event.target.usr.value;
+  var password = event.target.pword.value;
+  var msg = document.createElement('p');
+  for (var i = 0; i < userLibrary.length; i++) {
+     if (userLibrary[i].username === username && userLibrary[i].password === password) {
+        console.log('both correct');
+        NoteTracker.currentUser = userLibrary[i];
+        //need to store current user in Local Storage
+        /*localStorage.setItem('currentUser', JSON.stringify(NoteTracker.currentUser));*/
+        window.location = "notes.html";
+     }
+     else if (userLibrary[i].username === username && userLibrary[i].password !== password) {
+        msg.textContent = "Incorrect Password";
+        returnFormInput.appendChild(msg);
+     } else {
+        msg.textContent = "User Name Invalid";
+        returnFormInput.appendChild(msg);
+    }
+  }
+}
+
+returnFormInput.addEventListener('submit', returnUser);
+
+
 
 //need function to search for return user
 
@@ -125,12 +149,17 @@ newNote = document.getElementById('new'); // undefined right now becuase there i
 noteList = document.getElementById('noteList');
 displayWindow = document.getElementById('displayWindow');
   // currentUser is assigned the User object that passes checkInfo?
-  //currentUser: checkInfo(username, password)
-
+  currentUser: null
   // checkInfo (username, password) method here
   // for loop scans through userLibrary array
   // if pass, return User object?
   // if fail, return null?
+
+/*
+SetUser: function () {
+  this.currentUser = globalUser;
+}
+*/
 
   // newUser (event)
   // var username = event.target.myName.value;
@@ -169,3 +198,10 @@ displayWindow = document.getElementById('displayWindow');
 // Event listener for Returning User login form
 // var elReturnUser = document.getElementById('returnUser');
 // elReturnUser.addEventListener('submit', NoteTracker.returnUser);
+
+/*if (localStorage.currentUser) {
+  var globalUser = JSON.parse(localStorage.getItem('currentUser'));
+  NoteTracker.SetUser();
+  console.log('local storage retrieved');
+   }
+*/
