@@ -1,5 +1,7 @@
 var userLibrary = [];   // array of User objects
+
 var formInput = document.getElementById('newUser');
+
 
 function User (username, password) {
   this.username = username;
@@ -7,6 +9,17 @@ function User (username, password) {
   this.library = [];
   userLibrary.push(this);
 }  // array of Note objects
+
+      // array of Note objects
+
+  // newNote (title, content)
+  // this.library.push(new Note (title, content))
+  // creates new note and pushes to user's library
+  // calls sendToBrowser to add to browser list
+
+  // populateBrowser()
+  // for loop scans through library array, calls sendToBrowser(library[i])
+
 
 function Note (noteTitle, noteContent, date) {
   this.noteTitle = noteTitle;
@@ -56,6 +69,7 @@ formInput.addEventListener('submit', validateForm);
 
 
 
+
 function Notebook (note) {
   // this is a stretch goal
 }
@@ -63,7 +77,7 @@ function Notebook (note) {
 var NoteTracker = {
 
   // currentUser is assigned the User object that passes checkInfo?
-  //currentUser: checkInfo(username, password);
+  //currentUser: checkInfo(username, password)
 
   // checkInfo (username, password) method here
   // for loop scans through userLibrary array
