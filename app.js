@@ -8,6 +8,10 @@ function User (username, password) {
   this.password = password;
   this.library = [];
   userLibrary.push(this);
+  this.newNote = function (title, content) {
+    var temp = new Note (title, content);
+    this.Library.push(temp);
+  }
 }  // array of Note objects
 
       // array of Note objects
