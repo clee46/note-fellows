@@ -1,8 +1,13 @@
-var userLibrary = [];   // array of User objects
+var userLibrary = [];
+var noteCount = 0;
 
-//we need to account for switching users
-
+// this control flow allows us to avoid errors when switching between html pages
 if (document.title === "Welcome to Note Fellows!") {
+  if (localStorage.userIndex) {
+    var userIndex = JSON.parse(localStorage.getItem('userIndex'));
+    userLibrary = JSON.parse(localStorage.getItem('userLibrary'));
+    console.log('local storage retrieved');
+  }
   console.log ("You are on Index.html");
   var newFormInput = document.getElementById('newUser');
   var returnFormInput = document.getElementById('returnUser');
@@ -10,109 +15,43 @@ if (document.title === "Welcome to Note Fellows!") {
   returnFormInput.addEventListener('submit', returnUser);
 }
 else if (document.title === "Note Fellows") {
+  if (localStorage.userIndex) {
+    var userIndex = JSON.parse(localStorage.getItem('userIndex'));
+    userLibrary = JSON.parse(localStorage.getItem('userLibrary'));
+    console.log('local storage retrieved. user index is: ' + userIndex);
+   }
+
   console.log("You are on Notes.html");
   var el = document.getElementById('noteList');
-  el.addEventListener('click', function(e) {user1.getNote(e);}, false);
+  el.addEventListener('click', function(e) {NoteTracker.getNote(e);},false);
+  var newNoteInput = document.getElementById('textInput');
+  newNoteInput.addEventListener('submit', function(e) {NoteTracker.newNote(e);},false);
 }
 
 
-
-var counter = 0;    // id counter for ul list items
-var user1 = new User('clee46', 'password');
-user1.newNote('Note1 Title', 'How much wood could a woodchuck chuck if a woodchuck could chuck wood?');
-user1.newNote('Note2 Title', 'This is an example of a note fellows note!');
-user1.newNote('Note3 Title', 'Project week is coming! Project week is coming!');
-userLibrary.push(user1);
-
-function test (e) {
-  var target = getTarget(e);
-  console.log('The target is: ' + target);
-}
-
-function getTarget(e) {
-  return e.target || e.srcElement;
-}
-
-function User (username, password) {
+// OBJECT CONSTRUCTORS
+function User (username, password, library) {
   this.username = username;
   this.password = password;
-  this.library = [];
+  this.library = library;
   userLibrary.push(this);
-
-  this.newNote = function (title, content) {
-    var temp = new Note (title, content);
-    this.library.push(temp);
-    this.sendToBrowser(temp);
-  }
-
-  this.sendToBrowser = function (note) {
-    console.log('Inside sendToBrowser');
-    var elList = document.createElement('li');   // new list element
-
-    elList.setAttribute('id',"counter"+ counter);
-
-    var elTitle = document.createElement('p');    // note title
-    elTitle.textContent = note.noteTitle;
-    elList.appendChild(elTitle);
-
-    var elDate = document.createElement('p');    // note date
-    elDate.textContent = note.noteDate;
-    elList.appendChild(elDate);
-
-    var elContent = document.createElement('p');    // note content
-    elContent.textContent = note.noteContent;
-    elList.appendChild(elContent);    // append list element to existing list
-    el.appendChild(elList);
-    counter++;
-  }
-  this.getNote = function (e) {
-    var target = getTarget(e);
-    var elParent = target.parentNode;
-    var noteID = elParent.id.slice(7);
-    console.log('noteID is: ' + noteID);
-  }
-}  // array of Note objects
-
-      // array of Note objects
-
-  // newNote (title, content)
-  // this.library.push(new Note (title, content))
-  // creates new note and pushes to user's library
-  // calls sendToBrowser to add to browser list
-
-  // populateBrowser()
-  // for loop scans through library array, calls sendToBrowser(library[i])
-
-
-function Note (noteTitle, noteContent, date) {
+}
+function Note (noteTitle, noteContent) {
   this.noteTitle = noteTitle;
   this.noteContent = noteContent;
-  this.noteDate = date;
-  this.noteTags = [];
-
-  // sendToBrowser(note)
-  // appends new note to end of browser list
-
-  // displayNote ()
-  // calls clear () first before displaying note
-
-  // saveNote ()
-  // JSON to save note in local storage
 }
 
+// GLOBAL FUNCTIONS
 function newUser(event) {
-    /*  var un = document.loginform.usr.value;
-      var pw = document.loginform.pword.value;*/
   event.preventDefault();
   var username = event.target.usr.value;
   var password = event.target.pword.value;
-  var temp = new User(username, password);
+  var library = [];
+  var temp = new User(username, password, library);
+  console.log("User has been created. Now login above.");
 }
 
-
 function returnUser(event) {
-    /*  var un = document.loginform.usr.value;
-      var pw = document.loginform.pword.value;*/
   event.preventDefault();
   var username = event.target.usr.value;
   var password = event.target.pword.value;
@@ -122,115 +61,83 @@ function returnUser(event) {
         console.log('both correct');
         NoteTracker.currentUser = userLibrary[i];
         //need to store current user in Local Storage
-        /*localStorage.setItem('currentUser', JSON.stringify(NoteTracker.currentUser));*/
+        localStorage.setItem('userIndex', JSON.stringify(i));
+        localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
         window.location = "notes.html";
      }
      else if (userLibrary[i].username === username && userLibrary[i].password !== password) {
         msg.textContent = "Incorrect Password";
         returnFormInput.appendChild(msg);
-     } else {
+     }
+     else {
         msg.textContent = "User Name Invalid";
         returnFormInput.appendChild(msg);
     }
   }
 }
 
-returnFormInput.addEventListener('submit', returnUser);
-//need function to search for return user
-
-
-//call constructor to search array for username
-
-
-  // newNote (title, content)
-  // this.library.push(new Note (title, content))
-  // creates new note and pushes to user's library
-  // calls sendToBrowser to add to browser list
-
-  // populateBrowser()
-  // for loop scans through library array, calls sendToBrowser(library[i])
-
-//need function to search for return user
-
-
-//call constructor to search array for username
-
-
-  // newNote (title, content)
-  // this.library.push(new Note (title, content))
-  // creates new note and pushes to user's library
-  // calls sendToBrowser to add to browser list
-
-  // populateBrowser()
-  // for loop scans through library array, calls sendToBrowser(library[i])
-
-
-
-
-
-function Notebook (note) {
-  // this is a stretch goal
-}
-
 var NoteTracker = {
-  // currentUser is assigned the User object that passes checkInfo?
-  currentUser: null,
-  // checkInfo (username, password) method here
-  // for loop scans through userLibrary array
-  // if pass, return User object?
-  // if fail, return null?
 
-/*
-SetUser: function () {
-  this.currentUser = globalUser;
-}
-*/
+  currentIndex: userIndex,
 
-  // newUser (event)
-  // var username = event.target.myName.value;
-  // var password = event.target.min.value;
-  // if checkInfo fails, create the new User
-    // var user = new User (username,password);
-    // userLibrary.push(user);
-    // this.addToBrowser(user);
-  // if checkInfo passes, error message ("user already exists!")
+  newNote: function (event) {
+    event.preventDefault();
+    var noteTitle = event.target.noteTitle.value;
+    var noteContent = event.target.noteContent.value;
+    console.log("note title is: " + noteTitle);
+    console.log("note content is: " + noteContent);
+    var temp = new Note (noteTitle, noteContent);
+    console.log("current index is: " + this.currentIndex);
+    userLibrary[this.currentIndex].library.push(temp);
+    localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
+    this.sendToBrowser(temp);
+  },
+  getTarget: function (e) {
+    return e.target || e.srcElement;
+  },
+  getNote: function (e) {
+    var target = this.getTarget(e);
+    var elParent = target.parentNode;
+    var noteID = elParent.id.slice(7);
+    console.log('noteID is: ' + noteID);
+    this.displayNote(noteID);
+  },
+  sendToBrowser: function (note) {
+    var elList = document.createElement('li');    // new list element
+    elList.setAttribute('id',"counter" + noteCount);
 
-  // returnUser(event)
-  // var username = event.target.myName.value;
-  // var password = event.target.min.value;
-  // this.checkInfo(username, password);
-    // if pass, set currentUser to userLibrary[i];
-      // go to notes.html, call currentUser.populateBrowser
-    // if fail, error message ("user doesn't exist!")
+    var elTitle = document.createElement('p');    // note title
+    elTitle.textContent = note.noteTitle;
+    elList.appendChild(elTitle);
 
-  // clearDisplay ()
-  // removes the Node that displays current note
-    clearContent: function () {
+    var elDate = document.createElement('p');     // note date
+    elDate.textContent = note.noteDate;
+    elList.appendChild(elDate);
+
+    var elContent = document.createElement('p');    // note content
+    elContent.textContent = note.noteContent;
+    elList.appendChild(elContent);    // append list element to existing list
+    el.appendChild(elList);
+    noteCount++;
+  },
+  sendAll: function () {
+    for (var i = 0; i < userLibrary[userIndex].library.length; i++) {
+      this.sendToBrowser(userLibrary[userIndex].library[i]);
+    }
+  },
+  clearContent: function () {
       var form = document.getElementById('textInput');
       var container = form.parentNode;
       container.removeChild(form);
   },
-// sends note to local storage
-  // var saveNote = function () {
-  //   currentUser.library.push()
-  // }
   createContent: function() {
     this.clearContent();
     document.getElementById('displayWindow').innerHTML = '<form id="textInput"><fieldset><label for="noteTitle">Title</label><input type="text" name="noteTitle"/><label for="noteContent">Content</label><input type="text" name="noteContent"/><input class="button-primary" type="submit" value="Create New Note"></fieldset></form>';
+  },
+  displayNote: function(noteID) {
+    this.clearContent();
+    document.getElementById('displayWindow').innerHTML = '<h4>'+ userLibrary[this.currentIndex].library[noteID].noteTitle + '</h4><br/><br/><p>' + userLibrary[this.currentIndex].library[noteID].noteContent + '</p>';
   }
 };
 
-// Event listener for New User login form
-// var elNewUser = document.getElementById('newUser');
-// elNewUser.addEventListener('submit', NoteTracker.newUser);
-
-// Event listener for Returning User login form
-// var elReturnUser = document.getElementById('returnUser');
-// elReturnUser.addEventListener('submit', NoteTracker.returnUser);
-
-/*if (localStorage.currentUser) {
-  var globalUser = JSON.parse(localStorage.getItem('currentUser'));
-  NoteTracker.SetUser();
-  console.log('local storage retrieved');
-   }
-*/
+if (document.title === "Note Fellows") {NoteTracker.sendAll();}

@@ -7,28 +7,28 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
   <body>
-  <form id="login">
-    Username: <br>
-    <input type="text" name="username">
-    <br> or new username:
-    <input type="text" name="newUsername">
-  </form>
     <header>Welcome To Note Fellows</header>
 
       <form name="loginform" id="returnUser">
-          <label>Return User</label>
+        <fieldset>
+          <legend>Returning User</legend>
+          <label>Username</label>
           <input type="text" name="usr" placeholder="username">
           <label>Password</label>
           <input type="password" name="pword" placeholder="password">
           <input type="submit" value="Login"/>
+        </fieldset>
       </form>
 
       <form name="loginform" id="newUser">
-          <label>New User</label>
+        <fieldset>
+          <legend>Create New User</legend>
+          <label>Username</label>
           <input type="text" name="usr" placeholder="username">
           <label>Password</label>
           <input type="password" name="pword" placeholder="password">
-          <input type="submit" value="Login"/>
+          <input type="submit" value="Create"/>
+        </fieldset>
       </form>
 
 
