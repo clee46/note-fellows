@@ -130,15 +130,20 @@ var NoteTracker = {
       this.sendToBrowser(userLibrary[userIndex].library[i]);
     }
   },
+  clearNoteBrowser: function () {
+    document.getElementById('noteList').innerHTML = '';
+  },
   clearForm: function () {
-    var form = document.getElementById('textInput');
-    var container = form.parentNode;
-    container.removeChild(form);
+    //var form = document.getElementById('textInput');
+    // var container = form.parentNode;
+    // container.removeChild(form);
+    document.getElementById('displayWindow').innerHTML = '';
   },
   clearNoteWrapper: function (){
-    var noteWrapper = document.getElementById('noteWrapper');
-    var container = noteWrapper.parentNode;
-    container.removeChild(noteWrapper);
+    // var noteWrapper = document.getElementById('noteWrapper');
+    // var container = noteWrapper.parentNode;
+    // container.removeChild(noteWrapper);
+    document.getElementById('noteWrapper').innerHTML = '';
   },
   createContent: function() {
     this.clearForm();
@@ -152,8 +157,16 @@ var NoteTracker = {
     document.getElementById('displayWindow').innerHTML = '<form id="textInput"><fieldset><legend>Edit Note</legend><label for="noteTitle">Title</label><input type="text" value="' + userLibrary[this.currentIndex].library[noteID].noteTitle + '" name="noteTitle"><label for="noteContent">Content</label><input type="text" value="' + userLibrary[this.currentIndex].library[noteID].noteContent + '" name="noteContent"><input class="button-primary" type="submit" value="SaveNote"></fieldset></form>';
     var newNoteInput = document.getElementById('textInput');
     newNoteInput.addEventListener('submit', function(e) {
-      NoteTracker.newNote(e);
-      NoteTracker.deleteNote(tempNoteId);
+      console.log('Old note title is' + userLibrary[userIndex].library[tempNoteId].noteTitle);
+      userLibrary[userIndex].library[tempNoteId].noteTitle = e.target.noteTitle.value;
+      userLibrary[userIndex].library[tempNoteId].noteContent = e.target.noteContent.value;
+      console.log('New note title is' + userLibrary[userIndex].library[tempNoteId].noteTitle);
+      localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
+
+      // NoteTracker.newNote(e);
+      // NoteTracker.deleteNote(tempNoteId);
+      // NoteTracker.clearNoteBrowser();
+      // NoteTracker.sendAll();
       NoteTracker.createContent();},false);
   },
   displayNote: function(noteID) {
