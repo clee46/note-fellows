@@ -1,6 +1,5 @@
 var userLibrary = [];   // array of User objects
 
-
 //we need to account for switching users
 
 if (document.title === "Welcome to Note Fellows!") {
@@ -13,21 +12,25 @@ if (document.title === "Welcome to Note Fellows!") {
 else if (document.title === "Note Fellows") {
   console.log("You are on Notes.html");
   var el = document.getElementById('noteList');
-  el.addEventListener('click', function(e) {test(e);}, false);
+  el.addEventListener('click', function(e) {user1.getNote(e);}, false);
 }
 
 
 
 var counter = 0;    // id counter for ul list items
 var user1 = new User('clee46', 'password');
-// user1.newNote('Note1 Title', 'How much wood could a woodchuck chuck if a woodchuck could chuck wood?');
-// user1.newNote('Note2 Title', 'This is an example of a note fellows note!');
-// user1.newNote('Note3 Title', 'Project week is coming! Project week is coming!');
+user1.newNote('Note1 Title', 'How much wood could a woodchuck chuck if a woodchuck could chuck wood?');
+user1.newNote('Note2 Title', 'This is an example of a note fellows note!');
+user1.newNote('Note3 Title', 'Project week is coming! Project week is coming!');
 userLibrary.push(user1);
 
 function test (e) {
   var target = getTarget(e);
   console.log('The target is: ' + target);
+}
+
+function getTarget(e) {
+  return e.target || e.srcElement;
 }
 
 function User (username, password) {
@@ -61,6 +64,12 @@ function User (username, password) {
     elList.appendChild(elContent);    // append list element to existing list
     el.appendChild(elList);
     counter++;
+  }
+  this.getNote = function (e) {
+    var target = getTarget(e);
+    var elParent = target.parentNode;
+    var noteID = elParent.id.slice(7);
+    console.log('noteID is: ' + noteID);
   }
 }  // array of Note objects
 
