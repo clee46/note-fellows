@@ -3,7 +3,7 @@ var noteCount = 0;
 
 // this control flow allows us to avoid errors when switching between html pages
 if (document.title === "Welcome to Note Fellows!") {
-  if (localStorage.userIndex) {
+  if (localStorage.userIndex && localStorage.userLibrary) {
     var userIndex = JSON.parse(localStorage.getItem('userIndex'));
     userLibrary = JSON.parse(localStorage.getItem('userLibrary'));
     console.log('local storage retrieved');
@@ -46,8 +46,17 @@ function newUser(event) {
   event.preventDefault();
   var username = event.target.usr.value;
   var password = event.target.pword.value;
+  var msg = document.createElement('p');
   var library = [];
-  var temp = new User(username, password, library);
+  for (var i = 0; i < userLibrary.length; i++) {
+      if (userLibrary[i].username === username) {
+        msg.textContent = "Username already exists!";
+        returnFormInput.appendChild(msg);
+        } else {
+          NoteTracker.currentUser = userLibrary[i];
+        }
+      } 
+          var temp = new User(username, password, library); 
   console.log("User has been created. Now login above.");
 }
 
