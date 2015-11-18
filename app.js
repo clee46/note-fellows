@@ -1,19 +1,75 @@
 var userLibrary = [];   // array of User objects
 
-var newFormInput = document.getElementById('newUser');
-var returnFormInput = document.getElementById('returnUser');
-
-
 //we need to account for switching users
+
+if (document.title === "Welcome to Note Fellows!") {
+  console.log ("You are on Index.html");
+  var newFormInput = document.getElementById('newUser');
+  var returnFormInput = document.getElementById('returnUser');
+  newFormInput.addEventListener('submit', newUser);
+  returnFormInput.addEventListener('submit', returnUser);
+}
+else if (document.title === "Note Fellows") {
+  console.log("You are on Notes.html");
+  var el = document.getElementById('noteList');
+  el.addEventListener('click', function(e) {user1.getNote(e);}, false);
+}
+
+
+
+var counter = 0;    // id counter for ul list items
+var user1 = new User('clee46', 'password');
+user1.newNote('Note1 Title', 'How much wood could a woodchuck chuck if a woodchuck could chuck wood?');
+user1.newNote('Note2 Title', 'This is an example of a note fellows note!');
+user1.newNote('Note3 Title', 'Project week is coming! Project week is coming!');
+userLibrary.push(user1);
+
+function test (e) {
+  var target = getTarget(e);
+  console.log('The target is: ' + target);
+}
+
+function getTarget(e) {
+  return e.target || e.srcElement;
+}
 
 function User (username, password) {
   this.username = username;
   this.password = password;
   this.library = [];
   userLibrary.push(this);
+
   this.newNote = function (title, content) {
     var temp = new Note (title, content);
-    this.Library.push(temp);
+    this.library.push(temp);
+    this.sendToBrowser(temp);
+  }
+
+  this.sendToBrowser = function (note) {
+    console.log('Inside sendToBrowser');
+    var elList = document.createElement('li');   // new list element
+
+    elList.setAttribute('id',"counter"+ counter);
+
+    var elTitle = document.createElement('p');    // note title
+    elTitle.textContent = note.noteTitle;
+    elList.appendChild(elTitle);
+
+    var elDate = document.createElement('p');    // note date
+    elDate.textContent = note.noteDate;
+    elList.appendChild(elDate);
+
+    var elContent = document.createElement('p');    // note content
+    elContent.textContent = note.noteContent;
+    elList.appendChild(elContent);    // append list element to existing list
+    el.appendChild(elList);
+    counter++;
+  }
+  this.getNote = function (e) {
+    var target = getTarget(e);
+    var elParent = target.parentNode;
+    var noteID = elParent.id.slice(7);
+    console.log('noteID is: ' + noteID);
   }
 }  // array of Note objects
 
@@ -39,6 +95,9 @@ function Note (noteTitle, noteContent, date) {
 
   // displayNote ()
   // calls clear () first before displaying note
+
+  // saveNote ()
+  // JSON to save note in local storage
 }
 
 function newUser(event) {
@@ -49,7 +108,7 @@ function newUser(event) {
   var password = event.target.pword.value;
   var temp = new User(username, password);
 }
-newFormInput.addEventListener('submit', newUser);
+
 
 function returnUser(event) {
     /*  var un = document.loginform.usr.value;
@@ -76,11 +135,20 @@ function returnUser(event) {
   }
 }
 
-
 returnFormInput.addEventListener('submit', returnUser);
+//need function to search for return user
 
 
+//call constructor to search array for username
 
+
+  // newNote (title, content)
+  // this.library.push(new Note (title, content))
+  // creates new note and pushes to user's library
+  // calls sendToBrowser to add to browser list
+
+  // populateBrowser()
+  // for loop scans through library array, calls sendToBrowser(library[i])
 
 //need function to search for return user
 
@@ -105,14 +173,8 @@ function Notebook (note) {
 }
 
 var NoteTracker = {
-
-/*textInput: document.getElementById('textInput'),
-submit: document.getElementById('submit'),
-newNote: document.getElementById('new'), // undefined right now becuase there is no new note button created yet
-noteList: document.getElementById('noteList'),
-displayWindow: document.getElementById('displayWindow'),*/
   // currentUser is assigned the User object that passes checkInfo?
-  currentUser: null
+  currentUser: null,
   // checkInfo (username, password) method here
   // for loop scans through userLibrary array
   // if pass, return User object?
@@ -147,7 +209,6 @@ SetUser: function () {
       var form = document.getElementById('textInput');
       var container = form.parentNode;
       container.removeChild(form);
-      /*console.log(remove);*/
   },
 // sends note to local storage
   // var saveNote = function () {
@@ -156,28 +217,7 @@ SetUser: function () {
   createContent: function() {
     this.clearContent();
     document.getElementById('displayWindow').innerHTML = '<form id="textInput"><fieldset><label for="noteTitle">Title</label><input type="text" name="noteTitle"/><label for="noteContent">Content</label><input type="text" name="noteContent"/><input class="button-primary" type="submit" value="Create New Note"></fieldset></form>';
-    /*var createForm = document.createElement('form');
-    createForm.id = 'textInput';
-    this.displayWindow.appendChild(createForm);
-    console.log(displayWindow);*/
-    /*var getForm = document.getElementsByTagName('form');
-    console.log(getForm);
-    getForm[0].setAttribute('id', 'textInput');*/
-
-    /*var createFieldSet = document.createElement('fieldset');
-    console.log(createFieldSet);
-    createFieldSet.id = 'fieldset';
-    this.textInput.appendChild(createFieldSet);
-    var createLabel = document.createElement('label');
-    console.log(createLabel);
-    createLabel.setAttribute('for', 'noteTitle');
-    createFieldSet.appendChild(createLabel);
-    var createInput = document.createElement('input');
-    console.log(createInput);
-    createInput.setAttribute('type', 'text');
-    createInput.setAttribute('name', 'noteTitle');*/
-}
-
+  }
 };
 
 // Event listener for New User login form
