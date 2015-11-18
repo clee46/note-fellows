@@ -1,5 +1,6 @@
 var userLibrary = [];
 var noteCount = 0;
+var tempNoteId;
 
 // this control flow allows us to avoid errors when switching between html pages
 if (document.title === "Welcome to Note Fellows!") {
@@ -25,7 +26,8 @@ else if (document.title === "Note Fellows") {
   var el = document.getElementById('noteList');
   el.addEventListener('click', function(e) {NoteTracker.getNote(e);},false);
   var newNoteInput = document.getElementById('textInput');
-  newNoteInput.addEventListener('submit', function(e) {NoteTracker.newNote(e);},false);
+  newNoteInput.addEventListener('submit', function(e) {NoteTracker.newNote(e);
+  NoteTracker.createContent();},false);
 }
 
 
@@ -101,6 +103,9 @@ var NoteTracker = {
     localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
     this.sendToBrowser(temp);
   },
+  deleteNote: function(noteID) {
+    userLibrary[userIndex].library.splice(noteID, 1);
+  },
   getTarget: function (e) {
     return e.target || e.srcElement;
   },
@@ -134,18 +139,55 @@ var NoteTracker = {
       this.sendToBrowser(userLibrary[userIndex].library[i]);
     }
   },
-  clearContent: function () {
-      var form = document.getElementById('textInput');
-      var container = form.parentNode;
-      container.removeChild(form);
+  clearNoteBrowser: function () {
+    document.getElementById('noteList').innerHTML = '';
+  },
+  clearForm: function () {
+    //var form = document.getElementById('textInput');
+    // var container = form.parentNode;
+    // container.removeChild(form);
+    document.getElementById('displayWindow').innerHTML = '';
+  },
+  clearNoteWrapper: function (){
+    // var noteWrapper = document.getElementById('noteWrapper');
+    // var container = noteWrapper.parentNode;
+    // container.removeChild(noteWrapper);
+    document.getElementById('noteWrapper').innerHTML = '';
   },
   createContent: function() {
-    this.clearContent();
-    document.getElementById('displayWindow').innerHTML = '<form id="textInput"><fieldset><label for="noteTitle">Title</label><input type="text" name="noteTitle"/><label for="noteContent">Content</label><input type="text" name="noteContent"/><input class="button-primary" type="submit" value="Create New Note"></fieldset></form>';
+    this.clearForm();
+    document.getElementById('displayWindow').innerHTML = '<form id="textInput"><fieldset><legend>Create New Note</legend><label for="noteTitle">Title</label><input type="text" name="noteTitle"/><label for="noteContent">Content</label><input type="text" name="noteContent"/><input class="button-primary" type="submit" value="Create New Note"></fieldset></form>';
+  },
+  editNote: function(e) {
+    event.preventDefault();
+    var noteID = tempNoteId;
+    // console.log('noteID is' + noteID);
+    this.clearNoteWrapper();
+    document.getElementById('displayWindow').innerHTML = '<form id="textInput"><fieldset><legend>Edit Note</legend><label for="noteTitle">Title</label><input type="text" value="' + userLibrary[this.currentIndex].library[noteID].noteTitle + '" name="noteTitle"><label for="noteContent">Content</label><input type="text" value="' + userLibrary[this.currentIndex].library[noteID].noteContent + '" name="noteContent"><input class="button-primary" type="submit" value="SaveNote"></fieldset></form>';
+    var newNoteInput = document.getElementById('textInput');
+    newNoteInput.addEventListener('submit', function(e) {
+      console.log('Old note title is' + userLibrary[userIndex].library[tempNoteId].noteTitle);
+      userLibrary[userIndex].library[tempNoteId].noteTitle = e.target.noteTitle.value;
+      userLibrary[userIndex].library[tempNoteId].noteContent = e.target.noteContent.value;
+      console.log('New note title is' + userLibrary[userIndex].library[tempNoteId].noteTitle);
+      localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
+
+      // NoteTracker.newNote(e);
+      // NoteTracker.deleteNote(tempNoteId);
+      // NoteTracker.clearNoteBrowser();
+      // NoteTracker.sendAll();
+      NoteTracker.createContent();},false);
   },
   displayNote: function(noteID) {
-    this.clearContent();
-    document.getElementById('displayWindow').innerHTML = '<h4>'+ userLibrary[this.currentIndex].library[noteID].noteTitle + '</h4><br/><br/><p>' + userLibrary[this.currentIndex].library[noteID].noteContent + '</p>';
+    this.clearForm();
+    console.log(noteID);
+    tempNoteId = noteID;
+    document.getElementById('displayWindow').innerHTML = '<div id="noteWrapper"><h4>'+ userLibrary[this.currentIndex].library[noteID].noteTitle + '</h4><br/><br/><p>' + userLibrary[this.currentIndex].library[noteID].noteContent + '</p><input class="button-primary" type="submit" value="Edit Note" id="editbutton"></div>';
+    var editButton = document.getElementById('editbutton');
+    editButton.addEventListener('click', function(e){
+      console.log('event listener fired');
+      NoteTracker.editNote(e);
+    }, false);
   }
 };
 
