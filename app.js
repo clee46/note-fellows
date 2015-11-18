@@ -147,14 +147,17 @@ var NoteTracker = {
   },
   createContent: function() {
     this.clearForm();
-    document.getElementById('displayWindow').innerHTML = '<form id="textInput"><fieldset><legend>Create New Note</legend><label for="noteTitle">Title</label><input type="text" name="noteTitle"/><label for="noteContent">Content</label><input type="text" name="noteContent"/><input class="button-primary" type="submit" value="Cxreate New Note"></fieldset></form>';
+    document.getElementById('displayWindow').innerHTML = '<form id="textInput"><fieldset><legend>Create New Note</legend><label for="noteTitle">Title</label><input type="text" name="noteTitle"/><label for="noteContent">Content</label><input type="text" name="noteContent"/><input class="button-primary" type="submit" value="Create New Note"></fieldset></form>';
   },
   editNote: function(e) {
     event.preventDefault();
     var noteID = tempNoteId;
     console.log('noteID is' + noteID);
     this.clearNoteWrapper();
-    document.getElementById('displayWindow').innerHTML = '<form id="textInput"><fieldset><legend>Edit Note</legend><label for="noteTitle">Title</label><input type="text" name="noteTitle"/><textarea id="textAreaTitle">' + userLibrary[this.currentIndex].library[noteID].noteTitle + '</textarea><label for="noteContent">Content</label><input type="text" name="noteContent"/><textarea id="textAreaContent">' + userLibrary[this.currentIndex].library[noteID].noteContent + '</textarea><input class="button-primary" type="submit" value="Create New Note"></fieldset></form>';
+    document.getElementById('displayWindow').innerHTML = '<form id="textInput"><fieldset><legend>Edit Note</legend><label for="noteTitle">Title</label><input type="text" value="' + userLibrary[this.currentIndex].library[noteID].noteTitle + '" name="noteTitle"><label for="noteContent">Content</label><input type="text" value="' + userLibrary[this.currentIndex].library[noteID].noteContent + '" name="noteContent"><input class="button-primary" type="submit" value="SaveNote"></fieldset></form>';
+    var newNoteInput = document.getElementById('textInput');
+    newNoteInput.addEventListener('submit', function(e) {NoteTracker.newNote(e);
+    NoteTracker.createContent();},false);
   },
   displayNote: function(noteID) {
     this.clearForm();
