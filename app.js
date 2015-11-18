@@ -3,7 +3,7 @@ var noteCount = 0;
 
 // this control flow allows us to avoid errors when switching between html pages
 if (document.title === "Welcome to Note Fellows!") {
-  if (localStorage.userIndex) {
+  if (localStorage.userIndex && localStorage.userLibrary) {
     var userIndex = JSON.parse(localStorage.getItem('userIndex'));
     userLibrary = JSON.parse(localStorage.getItem('userLibrary'));
     console.log('local storage retrieved');
