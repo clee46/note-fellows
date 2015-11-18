@@ -94,6 +94,9 @@ var NoteTracker = {
     localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
     this.sendToBrowser(temp);
   },
+  deleteNote: function(noteID) {
+    userLibrary[userIndex].library.splice(noteID, 1);
+  },
   getTarget: function (e) {
     return e.target || e.srcElement;
   },
@@ -131,14 +134,6 @@ var NoteTracker = {
     var form = document.getElementById('textInput');
     var container = form.parentNode;
     container.removeChild(form);
-    // var containerEl = document.getElementById('displayWindow');
-    // var removeEl = containerEl.firstChild;
-    // console.log(removeEl);
-    // containerEl.removeChild(removeEl);
-      // var form = document.getElementById('dipsl');
-      // var container = form.parentNode;
-      // var form = document.getElementById('displayWindow');
-      // form.removeChild(form.firstChild);
   },
   clearNoteWrapper: function (){
     var noteWrapper = document.getElementById('noteWrapper');
@@ -152,12 +147,14 @@ var NoteTracker = {
   editNote: function(e) {
     event.preventDefault();
     var noteID = tempNoteId;
-    console.log('noteID is' + noteID);
+    // console.log('noteID is' + noteID);
     this.clearNoteWrapper();
     document.getElementById('displayWindow').innerHTML = '<form id="textInput"><fieldset><legend>Edit Note</legend><label for="noteTitle">Title</label><input type="text" value="' + userLibrary[this.currentIndex].library[noteID].noteTitle + '" name="noteTitle"><label for="noteContent">Content</label><input type="text" value="' + userLibrary[this.currentIndex].library[noteID].noteContent + '" name="noteContent"><input class="button-primary" type="submit" value="SaveNote"></fieldset></form>';
     var newNoteInput = document.getElementById('textInput');
-    newNoteInput.addEventListener('submit', function(e) {NoteTracker.newNote(e);
-    NoteTracker.createContent();},false);
+    newNoteInput.addEventListener('submit', function(e) {
+      NoteTracker.newNote(e);
+      NoteTracker.deleteNote(tempNoteId);
+      NoteTracker.createContent();},false);
   },
   displayNote: function(noteID) {
     this.clearForm();
