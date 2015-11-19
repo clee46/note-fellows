@@ -1,5 +1,33 @@
+html, body {
+  background-color: #333333;
+}
+
 .borders {
 	border: 2px solid black;
+}
+
+h1 {
+  margin-bottom: 40px;
+}
+
+nav {
+  margin-top:15px; /*needs to be adjusted*/
+}
+
+#topSpacing {
+  padding-top: 30px;
+}
+
+#logo {
+  height:150px;
+  width:150px;
+  float:right;
+}
+
+.smallLogo {
+  height: 70px;
+  width: 70px;
+  float:right;
 }
 
 .leftspacing {
@@ -15,6 +43,21 @@
     overflow-y: scroll;
     height: 500px;
     resize: none;
+    background-color: #ffffff;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  border: 1px solid black;
+  margin-bottom:0px;
+  padding-left: 10px;
+}
+
+li:hover {
+  background-color: #E0DDD1;
 }
 
 #titleTextArea {
@@ -27,6 +70,8 @@
 #textInput {
 	height:500px;
 	width:805px;
+  background-color: #ffffff;
+  padding-left:30px;
 }
 
 #contentTextArea {
@@ -82,3 +127,25 @@ input[type="button"].button-primary:focus {
   color: #FFF;
   background-color: #C2281E;
   border-color: #C2281E; }
+
+#tagForm {
+  color: #ffffff;
+}
+
+.tagColor {
+  color: #000000;
+}
+
+.imageSize {
+  height:200px;
+  width:200px;
+  float: right;
+}
+
+.aboutAlign {
+  text-align: center;
+}
+
+.info {
+  margin-top:55px;
+}

@@ -46,7 +46,7 @@ function Note (noteTitle, noteContent) {
 function newUserForm (event) {
   // event.preventDefault();
   document.getElementById('loginForm').innerHTML = '';
-  document.getElementById('loginForm').innerHTML = '<form name="loginform" id="newUser"><fieldset><legend>New User</legend><label>Username</label><input type="text" name="usr" placeholder="username" required="required"><label>Password</label><input type="password" name="pword" placeholder="password" required="required"><p id="msg"></p><br/><input type="submit" value="Create New User"/></fieldset></form><input class="button-primary" type="submit" value="Switch to Login Page" id="existingButton">';
+  document.getElementById('loginForm').innerHTML = '<form name="loginform" id="newUser"><fieldset><legend>New User</legend><label>Username</label><input type="text" name="usr" placeholder="username" required="required"><label>Password</label><input type="password" name="pword" placeholder="password" required="required"><p id="msg"></p><input class="button-primary" type="submit" value="Create New User"></fieldset></form><input class="button-primary" type="submit" value="Switch to Login Page" id="existingButton">';
   var newUserEl = document.getElementById('newUser');
   newUserEl.addEventListener('submit', function(e) {newUser(e);},false);
   var existingButton = document.getElementById('existingButton');
@@ -55,7 +55,7 @@ function newUserForm (event) {
 function returnUserForm (event) {
   // event.preventDefault();
   document.getElementById('loginForm').innerHTML = '';
-  document.getElementById('loginForm').innerHTML = '<form name="loginform" id="returnUser"><fieldset><legend>Returning User</legend><label>Username</label><input type="text" name="usr" placeholder="username" required="required"><label>Password</label><input type="password" name="pword" placeholder="password" required="required"><p id="msg"></p><br/><input type="submit" value="Login"/></fieldset></form><input class="button-primary" type="submit" value="Create New User" id="newButton">';
+  document.getElementById('loginForm').innerHTML = '<form name="loginform" id="returnUser"><fieldset><legend>Returning User</legend><label>Username</label><input type="text" name="usr" placeholder="username" required="required"><label>Password</label><input type="password" name="pword" placeholder="password" required="required"><p id="msg"></p><input class="button-primary" type="submit" value="Login"></fieldset></form><input class="button-primary" type="submit" value="Create New User" id="newButton">';
   var returnUserEl = document.getElementById('returnUser');
   returnUserEl.addEventListener('submit', function(e) {returnUser(e);},false);
   var newButton = document.getElementById('newButton');
@@ -209,9 +209,9 @@ var NoteTracker = {
     console.log('value is: ' + value);
   },
   tagsDropDown: function() {
-      var menu = '<form>Search By Tags: <select id="noteTags" onchange="NoteTracker.searchForTag(this.value)"><option value="none">None</option>';
+      var menu = '<form id="tagForm">Search By Tags: <select id="noteTags" onchange="NoteTracker.searchForTag(this.value)"><option class="tagColor" value="none">None</option>';
       for (var i = 0; i < userLibrary[userIndex].tagLibrary.length; i++) {
-        menu += '<option value="' + userLibrary[userIndex].tagLibrary[i] + '">' + userLibrary[userIndex].tagLibrary[i] + '</option>';
+        menu += '<option class-"tagColor" value="' + userLibrary[userIndex].tagLibrary[i] + '">' + userLibrary[userIndex].tagLibrary[i] + '</option>';
       }
       menu += '</select></form>';
     return menu;
