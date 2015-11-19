@@ -10,10 +10,11 @@ if (document.title === "Welcome to Note Fellows!") {
     console.log('local storage retrieved');
   }
   console.log ("You are on Index.html");
-  var newFormInput = document.getElementById('newUser');
-  var returnFormInput = document.getElementById('returnUser');
-  newFormInput.addEventListener('submit', newUser);
-  returnFormInput.addEventListener('submit', returnUser);
+  newUserForm();
+  // var newFormInput = document.getElementById('newUser');
+  // var returnFormInput = document.getElementById('returnUser');
+  // newFormInput.addEventListener('submit', newUser);
+  // returnFormInput.addEventListener('submit', returnUser);
 }
 else if (document.title === "Note Fellows") {
   if (localStorage.userIndex) {
@@ -27,9 +28,8 @@ else if (document.title === "Note Fellows") {
   el.addEventListener('click', function(e) {NoteTracker.getNote(e);},false);
   var newNoteInput = document.getElementById('textInput');
   newNoteInput.addEventListener('submit', function(e) {NoteTracker.newNote(e);
-  NoteTracker.createContent();},false);
+  NoteTracker.createForm();},false);
 }
-
 
 // OBJECT CONSTRUCTORS
 function User (username, password, library) {
@@ -44,30 +44,45 @@ function Note (noteTitle, noteContent) {
 }
 
 // GLOBAL FUNCTIONS
+function newUserForm (event) {
+  // event.preventDefault();
+  document.getElementById('loginForm').innerHTML = '';
+  document.getElementById('loginForm').innerHTML = '<form name="loginform" id="newUser"><fieldset><legend>New User</legend><label>Username</label><input type="text" name="usr" placeholder="username"><label>Password</label><input type="password" name="pword" placeholder="password"><p id="msg"></p><br/><input type="submit" value="Create New User"/></fieldset></form><input class="button-primary" type="submit" value="Switch to Login Page" id="existingButton">';
+  var newUserEl = document.getElementById('newUser');
+  newUserEl.addEventListener('submit', function(e) {newUser(e);},false);
+  var existingButton = document.getElementById('existingButton');
+  existingButton.addEventListener('click', function(e) {returnUserForm(e);},false);
+}
+function returnUserForm (event) {
+  // event.preventDefault();
+  document.getElementById('loginForm').innerHTML = '';
+  document.getElementById('loginForm').innerHTML = '<form name="loginform" id="returnUser"><fieldset><legend>Returning User</legend><label>Username</label><input type="text" name="usr" placeholder="username"><label>Password</label><input type="password" name="pword" placeholder="password"><p id="msg"></p><br/><input type="submit" value="Login"/></fieldset></form><input class="button-primary" type="submit" value="Create New User" id="newButton">';
+  var returnUserEl = document.getElementById('returnUser');
+  returnUserEl.addEventListener('submit', function(e) {returnUser(e);},false);
+  var newButton = document.getElementById('newButton');
+  newButton.addEventListener('click', function(e) {newUserForm(e);},false);
+}
 function newUser(event) {
   event.preventDefault();
   var username = event.target.usr.value;
   var password = event.target.pword.value;
   var msg = document.getElementById('msg');
   var library = [];
-
   var userExists = false;
 
   for (var i = 0; i < userLibrary.length; i++) {
-
     if (userLibrary[i].username === username) {
-      msg.textContent = "Username already exists.";
-      returnFormInput.appendChild(msg);
+      msg.textContent = "Username taken";
       userExists = true;
-      }
     }
-      if (!userExists) {
-          var temp = new User(username, password, library);
-          NoteTracker.currentUser = temp[i];
-          var x = userLibrary.length - 1;
-          localStorage.setItem('userIndex', JSON.stringify(x));
-          localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
-          window.location = "notes.html";
+  }
+  if (!userExists) {
+    var temp = new User(username, password, library);
+    NoteTracker.currentUser = temp;
+    var x = userLibrary.length - 1;
+    localStorage.setItem('userIndex', JSON.stringify(x));
+    localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
+    window.location = "notes.html";
   }
 }
 
@@ -75,25 +90,21 @@ function returnUser(event) {
   event.preventDefault();
   var username = event.target.usr.value;
   var password = event.target.pword.value;
-  var msg = document.createElement('p');
+  var msg = document.getElementById('msg');
+  var userExists = false;
   for (var i = 0; i < userLibrary.length; i++) {
-     if (userLibrary[i].username === username && userLibrary[i].password === password) {
-        console.log('both correct');
+    if (userLibrary[i].username === username && userLibrary[i].password === password) {
         NoteTracker.currentUser = userLibrary[i];
-        //need to store current user in Local Storage
         localStorage.setItem('userIndex', JSON.stringify(i));
         localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
         window.location = "notes.html";
      }
-     else if (userLibrary[i].username === username && userLibrary[i].password !== password) {
+    if (userLibrary[i].username === username && userLibrary[i].password !== password) {
         msg.textContent = "Incorrect Password";
-        returnFormInput.appendChild(msg);
+        userExists = true;
      }
-     else {
-        msg.textContent = "User Name Invalid";
-        returnFormInput.appendChild(msg);
-    }
-  }
+   }
+   if (!userExists) {msg.textContent = "User Does Not Exist";}
 }
 
 var NoteTracker = {
@@ -120,7 +131,7 @@ var NoteTracker = {
     this.clearNoteBrowser();
     this.clearForm();
     localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
-    this.createContent();
+    this.createForm();
     console.log(userLibrary);
     for (i=0; i < userLibrary[userIndex].library.length; i++) {
       this.sendToBrowser(userLibrary[userIndex].library[i]);
@@ -164,57 +175,38 @@ var NoteTracker = {
     document.getElementById('noteList').innerHTML = '';
   },
   clearForm: function () {
-    //var form = document.getElementById('textInput');
-    // var container = form.parentNode;
-    // container.removeChild(form);
     document.getElementById('displayWindow').innerHTML = '';
   },
   clearNoteWrapper: function (){
-    // var noteWrapper = document.getElementById('noteWrapper');
-    // var container = noteWrapper.parentNode;
-    // container.removeChild(noteWrapper);
     document.getElementById('noteWrapper').innerHTML = '';
   },
-  createContent: function() {
+  createForm: function() {
     this.clearForm();
     document.getElementById('displayWindow').innerHTML = '<form id="textInput"><fieldset><legend>Create New Note</legend><label for="noteTitle">Title</label><input type="text" name="noteTitle"/><label for="noteContent">Content</label><input type="text" name="noteContent"/><input class="button-primary" type="submit" value="Create New Note"></fieldset></form>';
+    newNoteInput = document.getElementById('textInput');
+    newNoteInput.addEventListener('submit', function(e) {NoteTracker.newNote(e);
+    NoteTracker.createForm();},false);
   },
   editNote: function(e) {
     event.preventDefault();
     var noteID = tempNoteId;
-    // console.log('noteID is' + noteID);
     this.clearNoteWrapper();
-    document.getElementById('displayWindow').innerHTML = '<form id="textInput"><fieldset><legend>Edit Note</legend><label for="noteTitle">Title</label><input type="text" value="' + userLibrary[this.currentIndex].library[noteID].noteTitle + '" name="noteTitle"><label for="noteContent">Content</label><input type="text" value="' + userLibrary[this.currentIndex].library[noteID].noteContent + '" name="noteContent"><input class="button-primary" type="submit" value="SaveNote"></fieldset></form>';
+    document.getElementById('displayWindow').innerHTML = '<form id="textInput"><fieldset><legend>Edit Note</legend><label for="noteTitle">Title</label><input type="text" value="' + userLibrary[this.currentIndex].library[noteID].noteTitle + '" name="noteTitle"><label for="noteContent">Content</label><input type="text" value="' + userLibrary[this.currentIndex].library[noteID].noteContent + '" name="noteContent"><input class="button-primary" type="submit" value="Update Note"></fieldset></form>';
     var newNoteInput = document.getElementById('textInput');
     newNoteInput.addEventListener('submit', function(e) {
-      console.log('Old note title is' + userLibrary[userIndex].library[tempNoteId].noteTitle);
       userLibrary[userIndex].library[tempNoteId].noteTitle = e.target.noteTitle.value;
       userLibrary[userIndex].library[tempNoteId].noteContent = e.target.noteContent.value;
-      console.log('New note title is' + userLibrary[userIndex].library[tempNoteId].noteTitle);
       localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
-
-      // NoteTracker.newNote(e);
-      // NoteTracker.deleteNote(tempNoteId);
-      // NoteTracker.clearNoteBrowser();
-      // NoteTracker.sendAll();
-      NoteTracker.createContent();},false);
+      NoteTracker.createForm();},false);
   },
   displayNote: function(noteID) {
     this.clearForm();
-    console.log(noteID);
     tempNoteId = noteID;
-    console.log(tempNoteId)
     document.getElementById('displayWindow').innerHTML = '<div id="noteWrapper"><h4>'+ userLibrary[this.currentIndex].library[noteID].noteTitle + '</h4><br/><br/><p>' + userLibrary[this.currentIndex].library[noteID].noteContent + '</p><input class="button-primary" type="submit" value="Edit Note" id="editbutton"><input class="button-primary" type="submit" value="Delete" id="deleteButton"></div>';
     var editButton = document.getElementById('editbutton');
-    editButton.addEventListener('click', function(e){
-      console.log('event listener fired');
-      NoteTracker.editNote(e);
-    }, false);
+    editButton.addEventListener('click', function(e){NoteTracker.editNote(e);}, false);
     var deleteButton = document.getElementById('deleteButton');
-    deleteButton.addEventListener('click', function(e){
-      console.log('event listener fired');
-      NoteTracker.deleteNote(e);
-    }, false);
+    deleteButton.addEventListener('click', function(e){NoteTracker.deleteNote(e);}, false);
   }
 };
 
