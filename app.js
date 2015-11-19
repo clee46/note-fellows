@@ -4,7 +4,7 @@ var tempNoteId;
 
 // this control flow allows us to avoid errors when switching between html pages
 if (document.title === "Welcome to Note Fellows!") {
-  if (localStorage.userIndex && localStorage.userLibrary) {
+  if (localStorage.userIndex  && localStorage.userLibrary) {
     var userIndex = JSON.parse(localStorage.getItem('userIndex'));
     userLibrary = JSON.parse(localStorage.getItem('userLibrary'));
     console.log('local storage retrieved');
@@ -48,18 +48,26 @@ function newUser(event) {
   event.preventDefault();
   var username = event.target.usr.value;
   var password = event.target.pword.value;
-  var msg = document.createElement('p');
+  var msg = document.getElementById('msg');
   var library = [];
+
+  var userExists = false;
+
   for (var i = 0; i < userLibrary.length; i++) {
-      if (userLibrary[i].username === username) {
-        msg.textContent = "Username already exists!";
-        returnFormInput.appendChild(msg);
-        } else {
-          NoteTracker.currentUser = userLibrary[i];
-        }
-      } 
-          var temp = new User(username, password, library); 
-  console.log("User has been created. Now login above.");
+    if (userLibrary[i].username === username) {
+      msg.textContent = "Username already exists.";
+      returnFormInput.appendChild(msg);
+      userExists = true;
+      }
+    }
+      if (!userExists) {
+          var temp = new User(username, password, library);
+          NoteTracker.currentUser = temp[i];
+          var x = userLibrary.length - 1;
+          localStorage.setItem('userIndex', JSON.stringify(x));
+          localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
+          window.location = "notes.html";
+  }
 }
 
 function returnUser(event) {
