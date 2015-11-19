@@ -1,0 +1,32 @@
+.borders {
+	border: 2px solid black;
+}
+
+
+#navBrowser {
+    overflow-y: scroll;
+    height: 500px;
+    resize: none;
+}
+
+#titleTextArea {
+	min-height:38px;
+	height:40px;
+	width:500px;
+
+}
+
+#textInput {
+	height:500px;
+	width:805px;
+}
+
+#contentTextArea {
+	width:500px;
+	height:300px;
+}
+
+.button, .button-primary {
+	background-color: #C2281E;
+}
+
