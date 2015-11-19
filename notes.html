@@ -10,7 +10,7 @@
   <body>
     <header>
       <nav>
-        <a class="button button-primary" href="index.html">Switch User</a>
+        <a class="button button-primary" href="index.html">Logout</a>
         <a class="button button-primary" href="feedback.html">Feedback</a>
 <!--         <a class="button button-primary" href="#">FAQ</a> -->
         <a class="button button-primary" href="about.html">About</a>
@@ -30,10 +30,13 @@
               <fieldset>
                 <legend>Create New Note</legend>
                 <label for="noteTitle">Title</label>
-                <input type="text" name="noteTitle"/>
+                <textarea required name="noteTitle"/></textarea>
+
+                <label for="noteTag">Assign a Tag</label>
+                <input required type="text" name="noteTag"/>
 
                 <label for="noteContent">Content</label>
-                <input type="text" name="noteContent"/>
+                <textarea required name="noteContent"/></textarea>
 
                 <input class="button-primary" type="submit" value="Create New Note">
               </fieldset>
