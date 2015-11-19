@@ -54,6 +54,7 @@ function newUser(event) {
   var userExists = false;
 
   for (var i = 0; i < userLibrary.length; i++) {
+
     if (userLibrary[i].username === username) {
       msg.textContent = "Username already exists.";
       returnFormInput.appendChild(msg);
@@ -111,8 +112,19 @@ var NoteTracker = {
     localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
     this.sendToBrowser(temp);
   },
-  deleteNote: function(noteID) {
-    userLibrary[userIndex].library.splice(noteID, 1);
+  deleteNote: function() {
+    noteCount =0;
+    console.log(tempNoteId);
+    console.log(userLibrary);
+    userLibrary[userIndex].library.splice(tempNoteId, 1);
+    this.clearNoteBrowser();
+    this.clearForm();
+    localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
+    this.createContent();
+    console.log(userLibrary);
+    for (i=0; i < userLibrary[userIndex].library.length; i++) {
+      this.sendToBrowser(userLibrary[userIndex].library[i]);
+    }
   },
   getTarget: function (e) {
     return e.target || e.srcElement;
@@ -120,8 +132,9 @@ var NoteTracker = {
   getNote: function (e) {
     var target = this.getTarget(e);
     var elParent = target.parentNode;
-    var noteID = elParent.id.slice(7);
+    var noteID = elParent.id.slice(7);//slicing string to get array position
     console.log('noteID is: ' + noteID);
+    tempNoteId = noteID;
     this.displayNote(noteID);
   },
   sendToBrowser: function (note) {
@@ -190,11 +203,17 @@ var NoteTracker = {
     this.clearForm();
     console.log(noteID);
     tempNoteId = noteID;
-    document.getElementById('displayWindow').innerHTML = '<div id="noteWrapper"><h4>'+ userLibrary[this.currentIndex].library[noteID].noteTitle + '</h4><br/><br/><p>' + userLibrary[this.currentIndex].library[noteID].noteContent + '</p><input class="button-primary" type="submit" value="Edit Note" id="editbutton"></div>';
+    console.log(tempNoteId)
+    document.getElementById('displayWindow').innerHTML = '<div id="noteWrapper"><h4>'+ userLibrary[this.currentIndex].library[noteID].noteTitle + '</h4><br/><br/><p>' + userLibrary[this.currentIndex].library[noteID].noteContent + '</p><input class="button-primary" type="submit" value="Edit Note" id="editbutton"><input class="button-primary" type="submit" value="Delete" id="deleteButton"></div>';
     var editButton = document.getElementById('editbutton');
     editButton.addEventListener('click', function(e){
       console.log('event listener fired');
       NoteTracker.editNote(e);
+    }, false);
+    var deleteButton = document.getElementById('deleteButton');
+    deleteButton.addEventListener('click', function(e){
+      console.log('event listener fired');
+      NoteTracker.deleteNote(e);
     }, false);
   }
 };
