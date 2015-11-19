@@ -18,15 +18,10 @@ else if (document.title === "Note Fellows") {
     userLibrary = JSON.parse(localStorage.getItem('userLibrary'));
     console.log('local storage retrieved. user index is: ' + userIndex);
    }
-
   console.log("You are on Notes.html");
   var el = document.getElementById('noteList');
   el.addEventListener('click', function(e) {NoteTracker.getNote(e);},false);
-  // var newNoteInput = document.getElementById('textInput');
-  // newNoteInput.addEventListener('submit', function(e) {NoteTracker.newNote(e);
-  // NoteTracker.createForm();},false);
 }
-
 // OBJECT CONSTRUCTORS
 function User (username, password, library, tagLibrary) {
   this.username = username;
@@ -41,7 +36,6 @@ function Note (noteTitle, noteContent) {
   this.noteTags = [];
   this.noteIndex = 0;
 }
-
 // GLOBAL FUNCTIONS
 function newUserForm (event) {
   // event.preventDefault();
@@ -85,7 +79,6 @@ function newUser(event) {
     window.location = "notes.html";
   }
 }
-
 function returnUser(event) {
   event.preventDefault();
   var username = event.target.usr.value;
@@ -161,9 +154,7 @@ var NoteTracker = {
 
     var tempTags = [];
     // store the tags to be deleted before deleting the note
-    for (var k = 0; k < userLibrary[userIndex].library[tempNoteId].noteTags.length; k++) {
-      tempTags.push(userLibrary[userIndex].library[tempNoteId].noteTags[k]);
-    }
+    for (var k = 0; k < userLibrary[userIndex].library[tempNoteId].noteTags.length; k++) {tempTags.push(userLibrary[userIndex].library[tempNoteId].noteTags[k]);}
 
     userLibrary[userIndex].library.splice(tempNoteId, 1);
 
@@ -175,11 +166,12 @@ var NoteTracker = {
           this.deleteTag(tempTags[i]);
       }
     }
+    localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
+    userLibrary = JSON.parse(localStorage.getItem('userLibrary'));
     this.clearNoteBrowser();
     this.clearForm();
     this.createForm();
     NoteTracker.sendAll();
-    localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
   },
   getTarget: function (e) {
     return e.target || e.srcElement;
@@ -225,70 +217,62 @@ var NoteTracker = {
     document.getElementById('noteWrapper').innerHTML = '';
   },
   tagsDropDown: function() {
+      userLibrary = JSON.parse(localStorage.getItem('userLibrary'));
       var menu = '<form>Search By Tags: <select id="noteTags" onchange="NoteTracker.searchForTag(this.value)"><option value="none">None</option>';
       for (var i = 0; i < userLibrary[userIndex].tagLibrary.length; i++) {
-        menu += '<option value="' + userLibrary[userIndex].tagLibrary[i] + '">' + userLibrary[userIndex].tagLibrary[i] + '</option>';
+        menu += '<option value="' + userLibrary[userIndex].tagLibrary[i] + '">' +userLibrary[userIndex].tagLibrary[i] + '</option>';
       }
       menu += '</select></form>';
     return menu;
   },
-assignTags: function(){
-  var select = document.getElementById('multipleTags');
-  var result = [];
-  var options = select && select.options;
-  var opt;
-  for (var i = 0; i < options.length; i++){
-    opt = options[i];
-
-    if (opt.selected) {
-      // if option is selected and does not already exist, assign it to the note
-      if (userLibrary[userIndex].library[tempNoteId].noteTags.indexOf(opt.value) === -1)
-      {userLibrary[userIndex].library[tempNoteId].noteTags.push(opt.value);}
-      // result.push(opt.value  || opt.text);
-    }
-  }
-  localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
-  // return result;
-},
-removeTags: function(){
-
-  var select = document.getElementById('multipleTags');
-  var result = [];
-  var options = select && select.options;
-  var opt;
-  for (var i = 0; i < options.length; i++){
-    opt = options[i];
-
-
-
-  // get selected tags
-  // if selected and if tag exists in library[tempNoteId]
-  // scan through all notetags
-  // if found, splice then break
-  // library[tempNoteid].noteTags.splice
-
-
-    if (opt.selected) {
-      var x = userLibrary[userIndex].library[tempNoteId].noteTags.indexOf(opt.value);
-      console.log('x equals ' + x);
-      // if option is selected and exists on current note, splice it out
-      if (x !== -1) {
-        userLibrary[userIndex].library[tempNoteId].noteTags.splice(x,1);
-        if (!this.checkTagExists(opt.value)) {NoteTracker.deleteTag(opt.value);}
+  assignTags: function(){
+    var select = document.getElementById('multipleTags');
+    var result = [];
+    var options = select && select.options;
+    var opt;
+    for (var i = 0; i < options.length; i++){
+      opt = options[i];
+      if (opt.selected) {
+        if (userLibrary[userIndex].library[tempNoteId].noteTags.indexOf(opt.value) === -1)
+        {userLibrary[userIndex].library[tempNoteId].noteTags.push(opt.value);}
       }
-      // result.push(opt.value  || opt.text);
     }
-  }
-  localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
-  // return result;
-},
+    localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
+    userLibrary = JSON.parse(localStorage.getItem('userLibrary'));
+  },
+  removeTags: function () {
+    var select = document.getElementById('multipleTags');
+    var result = [];
+    var options = select && select.options;
+    var opt;
+    for (var i = 0; i < options.length; i++) {
+      opt = options[i];
+      if (opt.selected) {
+        var x = userLibrary[userIndex].library[tempNoteId].noteTags.indexOf(opt.value);
+        console.log('x equals ' + x);
+        if (x !== -1) {
+          userLibrary[userIndex].library[tempNoteId].noteTags.splice(x,1);
+          if (!this.checkTagExists(opt.value)) {NoteTracker.deleteTag(opt.value);}
+        }
+      }
+    }
+    localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
+    userLibrary = JSON.parse(localStorage.getItem('userLibrary'));
+  },
   tagsMultipleSelect: function() {
-      var menu = '<form><select id="multipleTags" size="5" multiple="multiple">';
-      for (var i = 0; i < userLibrary[userIndex].tagLibrary.length; i++) {
-        menu += '<option value="' + userLibrary[userIndex].tagLibrary[i] + '">' + userLibrary[userIndex].tagLibrary[i] + '</option>';
-      }
-      menu += '</select><button onclick="NoteTracker.assignTags();">Assign</button><button onclick="NoteTracker.removeTags();">Remove</button></form>';
+    var menu = '<form><select id="multipleTags" size="5" multiple="multiple">';
+    for (var i = 0; i < userLibrary[userIndex].tagLibrary.length; i++) {
+      menu += '<option value="' + userLibrary[userIndex].tagLibrary[i] + '">' + userLibrary[userIndex].tagLibrary[i] + '</option>';
+    }
+    menu += '</select><button onclick="NoteTracker.assignTags();">Assign</button><button onclick="NoteTracker.removeTags();">Remove</button></form>';
     return menu;
+  },
+  createForm: function() {
+    this.clearForm();
+    document.getElementById('displayWindow').innerHTML = '<form id="textInput"><fieldset><legend>Create New Note</legend><label for="noteTitle">Title</label><textarea name="noteTitle" required="required"></textarea><label for="noteTag">Add a Tag</label><input type="text" name="noteTag" required="required"/><label for="noteContent">Content</label><textarea name="noteContent" required="required"></textarea><input class="button-primary" type="submit" value="Create New Note"></fieldset></form>' + this.tagsDropDown();
+    newNoteInput = document.getElementById('textInput');
+    newNoteInput.addEventListener('submit', function(e) {NoteTracker.newNote(e);
+    NoteTracker.createForm();},false);
   },
   updateForm: function(e){
     userLibrary[userIndex].library[tempNoteId].noteTitle = e.target.noteTitle.value;
@@ -297,28 +281,23 @@ removeTags: function(){
         console.log('outer test passed');
         if (!NoteTracker.checkTagExists(e.target.noteTag.value)){
           console.log('inner test passed');
-          userLibrary[userIndex].library[tempNoteId].noteTags.push(e.target.noteTitle.value);
+          userLibrary[userIndex].library[tempNoteId].noteTags.push(e.target.noteTag.value);
           }
         }
       userLibrary[userIndex].library[tempNoteId].noteContent = e.target.noteContent.value;
+      if (userLibrary[userIndex].tagLibrary.indexOf(e.target.noteTag.value) === -1) {
+        userLibrary[userIndex].tagLibrary.push(e.target.noteTag.value);
+      }
       localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
- },
-  createForm: function() {
-    this.clearForm();
-    document.getElementById('displayWindow').innerHTML = '<form id="textInput"><fieldset><legend>Create New Note</legend><label for="noteTitle">Title</label><textarea name="noteTitle" required="required"></textarea><label for="noteTag">Add a Tag</label><input type="text" name="noteTag" required="required"/><label for="noteContent">Content</label><textarea name="noteContent" required="required"></textarea><input class="button-primary" type="submit" value="Create New Note"></fieldset></form>' + this.tagsDropDown();
-    newNoteInput = document.getElementById('textInput');
-    newNoteInput.addEventListener('submit', function(e) {NoteTracker.newNote(e);
-    NoteTracker.createForm();},false);
+      NoteTracker.createForm();
   },
   editNote: function(e) {
     e.preventDefault();
     var noteID = tempNoteId;
-    this.clearForm();
-    //this.clearNoteWrapper();
+    this.clearNoteWrapper();
     document.getElementById('displayWindow').innerHTML = '<form id="textInput"><fieldset><legend>Edit Note</legend><label for="noteTitle">Title</label><textarea name="noteTitle">' + userLibrary[this.currentIndex].library[noteID].noteTitle + '</textarea><label for="noteTag">noteTag</label><textarea name="noteTag"></textarea><label for="noteContent">Content</label><textarea name="noteContent">' + userLibrary[this.currentIndex].library[noteID].noteContent + '</textarea><input class="button-primary" type="submit" value="Update Note"></fieldset></form>' + this.tagsMultipleSelect();
     var newNoteInput = document.getElementById('textInput');
-    newNoteInput.addEventListener('submit', function(e) {NoteTracker.updateForm(e);NoteTracker.createForm();});
-
+    newNoteInput.addEventListener('submit', function(e) {NoteTracker.updateForm(e);},false);
   },
   displayNote: function(noteID) {
     this.clearForm();
