@@ -46,7 +46,7 @@ function Note (noteTitle, noteContent) {
 function newUserForm (event) {
   // event.preventDefault();
   document.getElementById('loginForm').innerHTML = '';
-  document.getElementById('loginForm').innerHTML = '<form name="loginform" id="newUser"><fieldset><legend>New User</legend><label>Username</label><input type="text" name="usr" placeholder="username" required="required"><label>Password</label><input type="password" name="pword" placeholder="password" required="required"><p id="msg"></p><input class="button-primary" type="submit" value="Create New User"></fieldset></form><input class="button-primary" type="submit" value="Switch to Login Page" id="existingButton">';
+  document.getElementById('loginForm').innerHTML = '<form name="loginform" class="whiteText" id="newUser"><fieldset><legend>New User</legend><label>Username</label><input class="labelColor" type="text" name="usr" placeholder="username" required="required"><label>Password</label><input class="labelColor" type="password" name="pword" placeholder="password" required="required"><p id="msg"></p><input class="button-primary" type="submit" value="Create New User"></fieldset></form><input class="button-primary" type="submit" value="Switch to Login Page" id="existingButton">';
   var newUserEl = document.getElementById('newUser');
   newUserEl.addEventListener('submit', function(e) {newUser(e);},false);
   var existingButton = document.getElementById('existingButton');
@@ -55,7 +55,7 @@ function newUserForm (event) {
 function returnUserForm (event) {
   // event.preventDefault();
   document.getElementById('loginForm').innerHTML = '';
-  document.getElementById('loginForm').innerHTML = '<form name="loginform" id="returnUser"><fieldset><legend>Returning User</legend><label>Username</label><input type="text" name="usr" placeholder="username" required="required"><label>Password</label><input type="password" name="pword" placeholder="password" required="required"><p id="msg"></p><input class="button-primary" type="submit" value="Login"></fieldset></form><input class="button-primary" type="submit" value="Create New User" id="newButton">';
+  document.getElementById('loginForm').innerHTML = '<form name="loginform" class="whiteText" id="returnUser"><fieldset><legend>Returning User</legend><label>Username</label><input class="labelColor" type="text" name="usr" placeholder="username" required="required"><label>Password</label><input class="labelColor" type="password" name="pword" placeholder="password" required="required"><p id="msg"></p><input class="button-primary" type="submit" value="Login"></fieldset></form><input class="button-primary" type="submit" value="Create New User" id="newButton">';
   var returnUserEl = document.getElementById('returnUser');
   returnUserEl.addEventListener('submit', function(e) {returnUser(e);},false);
   var newButton = document.getElementById('newButton');
@@ -246,7 +246,7 @@ var NoteTracker = {
   displayNote: function(noteID) {
     this.clearForm();
     tempNoteId = noteID;
-    document.getElementById('displayWindow').innerHTML = '<div id="noteWrapper" class="borders"><h4>'+ userLibrary[this.currentIndex].library[noteID].noteTitle + '</h4><br/><br/><p>' + userLibrary[this.currentIndex].library[noteID].noteContent + '</p><input class="button-primary" type="submit" value="Edit Note" id="editbutton"><input class="button-primary" type="submit" value="Delete" id="deleteButton"></div>';
+    document.getElementById('displayWindow').innerHTML = '<div id="noteWrapper" class="borders"><h4 class="labelColor">'+ userLibrary[this.currentIndex].library[noteID].noteTitle + '</h4><br/><br/><p class="labelColor">' + userLibrary[this.currentIndex].library[noteID].noteContent + '</p><input class="button-primary navspacing" type="submit" value="Edit Note" id="editbutton"><input class="button-primary navspacing" type="submit" value="Delete" id="deleteButton"></div>';
     var editButton = document.getElementById('editbutton');
     editButton.addEventListener('click', function(e){NoteTracker.editNote(e);}, false);
     var deleteButton = document.getElementById('deleteButton');
