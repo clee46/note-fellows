@@ -46,27 +46,25 @@ function newUser(event) {
   event.preventDefault();
   var username = event.target.usr.value;
   var password = event.target.pword.value;
-  var msg = document.createElement('p');
+  var msg = document.getElementById('msg');
   var library = [];
 
   var userExists = false;
 
   for (var i = 0; i < userLibrary.length; i++) {
-      if (userLibrary[i].username === username) {
-        msg.textContent = "Username already exists!";
-        returnFormInput.appendChild(msg);
-        userExists = true;
-        }
+    if (userLibrary[i].username === username) {
+      msg.textContent = "Username already exists.";
+      returnFormInput.appendChild(msg);
+      userExists = true;
       }
-       if (!userExists) {
+    }
+      if (!userExists) {
           var temp = new User(username, password, library);
           NoteTracker.currentUser = temp[i];
           var x = userLibrary.length - 1;
-          console.log('last user is' + x);
           localStorage.setItem('userIndex', JSON.stringify(x));
           localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
           window.location = "notes.html";
-  console.log("User has been created. Now login above.");
   }
 }
 
