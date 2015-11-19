@@ -132,18 +132,22 @@ var NoteTracker = {
     localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
     this.sendToBrowser(temp);
   },
-  deleteTag: function() {// deletes tags from user's library
-    for (var i = 0; i < userLibrary[userIndex].library[tempNoteId].noteTags.length; i++) {
-      var x = userLibrary[userIndex].library[tempNoteId].noteTags[i];
-      for (var j = 0; j < userLibrary[userIndex].library.length; j++) {
-        for (var k = 0; k < userLibrary[userIndex].tagLibrary.length; k++) {
-          if (x === userLibrary[userIndex].tagLibrary[k]) {
-            userLibrary[userIndex].tagLibrary.splice(k,1);
-            break;
-          }
+  deleteTag: function(tag) {// deletes specified tag from user's library
+    var toBeDeleted = userLibrary[userIndex].tagLibrary.indexOf(tag);
+    console.log('Tag library index to be spliced: ' + toBeDeleted);
+    userLibrary[userIndex].tagLibrary.splice(toBeDeleted,1);
+  },
+  checkTagExists: function(tag) {
+    var tagExists = false;
+    for (var j = 0; j < userLibrary[userIndex].library.length; j++) {
+      for (var k = 0; k < userLibrary[userIndex].library[j].noteTags.length; k++) {
+        if (userLibrary[userIndex].library[j].noteTags.indexOf(tag) !== -1) {
+          tagExists = true;
+          break;
         }
       }
     }
+    return tagExists;
   },
   deleteNote: function(event) {
     event.preventDefault();
@@ -154,11 +158,26 @@ var NoteTracker = {
       console.log('index after ' + userLibrary[userIndex].library[j].noteIndex);
     }
     noteCount = 0;
-    this.deleteTag();
+
+    var tempTags = [];
+    // store the tags to be deleted before deleting the note
+    for (var k = 0; k < userLibrary[userIndex].library[tempNoteId].noteTags.length; k++) {
+      tempTags.push(userLibrary[userIndex].library[tempNoteId].noteTags[k]);
+    }
+
+    userLibrary[userIndex].library.splice(tempNoteId, 1);
+
+    // check if the tags attached to the deleted note exist in the updated library
+    for (var i = 0; i < tempTags.length; i++) {
+      // if no other instances exist, then delete the tag from the user's tag library
+      if (!this.checkTagExists(tempTags[i])) {
+          console.log('Sending tag to be deleted: ' + tempTags[i]);
+          this.deleteTag(tempTags[i]);
+      }
+    }
     this.clearNoteBrowser();
     this.clearForm();
     this.createForm();
-    userLibrary[userIndex].library.splice(tempNoteId, 1);
     NoteTracker.sendAll();
     localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
   },
@@ -181,9 +200,9 @@ var NoteTracker = {
     elTitle.textContent = note.noteTitle;
     elList.appendChild(elTitle);
 
-    var elDate = document.createElement('p');     // note date
-    elDate.textContent = note.noteDate;
-    elList.appendChild(elDate);
+    var elNote = document.createElement('p');     // note date
+    elNote.textContent = note.noteTags;
+    elList.appendChild(elNote);
 
     var elContent = document.createElement('p');    // note content
     elContent.textContent = note.noteContent;
@@ -205,9 +224,9 @@ var NoteTracker = {
   clearNoteWrapper: function (){
     document.getElementById('noteWrapper').innerHTML = '';
   },
-  listQ: function (value){
-    console.log('value is: ' + value);
-  },
+  // listQ: function (value){
+  //   console.log('value is: ' + value);
+  // },
   tagsDropDown: function() {
       var menu = '<form>Search By Tags: <select id="noteTags" onchange="NoteTracker.searchForTag(this.value)"><option value="none">None</option>';
       for (var i = 0; i < userLibrary[userIndex].tagLibrary.length; i++) {
@@ -217,7 +236,7 @@ var NoteTracker = {
     return menu;
   },
 assignTags: function(){
-   var select = document.getElementById('multipleTags');
+  var select = document.getElementById('multipleTags');
   var result = [];
   var options = select && select.options;
   var opt;
@@ -225,7 +244,8 @@ assignTags: function(){
     opt = options[i];
 
     if (opt.selected) {
-      userLibrary[userIndex].library[tempNoteId].noteTags.push(opt.value);
+      if (userLibrary[userIndex].library[tempNoteId].noteTags.indexOf(opt.value) === -1)
+      {userLibrary[userIndex].library[tempNoteId].noteTags.push(opt.value);}
       result.push(opt.value  || opt.text);
     }
   }
