@@ -216,17 +216,33 @@ var NoteTracker = {
       menu += '</select></form>';
     return menu;
   },
+assignTags: function(){
+   var select = document.getElementById('multipleTags');
+  var result = [];
+  var options = select && select.options;
+  var opt;
+  for (var i = 0; i < options.length; i++){
+    opt = options[i];
+
+    if (opt.selected) {
+      userLibrary[userIndex].library[tempNoteId].noteTags.push(opt.value);
+      result.push(opt.value  || opt.text);
+    }
+  }
+  localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
+  return result;
+},
   tagsMultipleSelect: function() {
-      var tags = '<form>Search By Tags: <select id="noteTags" onchange="NoteTracker.searchForTag(this.value)"><option value="none">None</option>';
+      var menu = '<form><select id="multipleTags" size="5" multiple="multiple"><option value="none">None</option>';
       for (var i = 0; i < userLibrary[userIndex].tagLibrary.length; i++) {
-        tags += '<option value="' + userLibrary[userIndex].tagLibrary[i] + '">' + userLibrary[userIndex].tagLibrary[i] + '</option>';
+        menu += '<option value="' + userLibrary[userIndex].tagLibrary[i] + '">' + userLibrary[userIndex].tagLibrary[i] + '</option>';
       }
-      tags += '</select></form>';
-    return tags;
+      menu += '</select><button onclick="NoteTracker.assignTags();">TEST</button></form>';
+    return menu;
   },
   createForm: function() {
     this.clearForm();
-    document.getElementById('displayWindow').innerHTML = '<form id="textInput"><fieldset><legend>Create New Note</legend><label for="noteTitle">Title</label><textarea name="noteTitle"/></textarea><label for="noteTag">Add a Tag</label><input type="text" name="noteTag"/><label for="noteContent">Content</label><textarea name="noteContent"/></textarea><input class="button-primary" type="submit" value="Create New Note"></fieldset></form>' + this.tagsDropDown();
+    document.getElementById('displayWindow').innerHTML = '<form id="textInput"><fieldset><legend>Create New Note</legend><label for="noteTitle">Title</label><textarea name="noteTitle" required="required"></textarea><label for="noteTag">Add a Tag</label><input type="text" name="noteTag" required="required"/><label for="noteContent">Content</label><textarea name="noteContent" required="required"></textarea><input class="button-primary" type="submit" value="Create New Note"></fieldset></form>' + this.tagsDropDown();
     newNoteInput = document.getElementById('textInput');
     newNoteInput.addEventListener('submit', function(e) {NoteTracker.newNote(e);
     NoteTracker.createForm();},false);
@@ -235,7 +251,7 @@ var NoteTracker = {
     event.preventDefault();
     var noteID = tempNoteId;
     this.clearNoteWrapper();
-    document.getElementById('displayWindow').innerHTML = '<form id="textInput"><fieldset><legend>Edit Note</legend><label for="noteTitle">Title</label><textarea name="noteTitle">' + userLibrary[this.currentIndex].library[noteID].noteTitle + '</textarea><label for="noteContent">Content</label><textarea name="noteContent">' + userLibrary[this.currentIndex].library[noteID].noteContent + '</textarea><input class="button-primary" type="submit" value="Update Note"></fieldset></form>';
+    document.getElementById('displayWindow').innerHTML = '<form id="textInput"><fieldset><legend>Edit Note</legend><label for="noteTitle">Title</label><textarea name="noteTitle">' + userLibrary[this.currentIndex].library[noteID].noteTitle + '</textarea><label for="noteContent">Content</label><textarea name="noteContent">' + userLibrary[this.currentIndex].library[noteID].noteContent + '</textarea><input class="button-primary" type="submit" value="Update Note"></fieldset></form>' + this.tagsMultipleSelect();
     var newNoteInput = document.getElementById('textInput');
     newNoteInput.addEventListener('submit', function(e) {
       userLibrary[userIndex].library[tempNoteId].noteTitle = e.target.noteTitle.value;
