@@ -151,15 +151,21 @@ input[type="button"].button-primary:focus {
   margin-top:55px;
 }
 
-#newUser {
-  color: #FFFFFF;
-}
-
-#returnUser {
-  color: #FFFFFF;
+#noteWrapper {
+  background-color: #FFFFFF;
+  padding-left: 30px;
 }
 
 .labelColor {
   color: #000000;
 }
+
+.whiteText {
+  color:#FFFFFF;
+}
+
+.changeFont {
+  font-size: 24px;
+}
+
 
