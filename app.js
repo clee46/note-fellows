@@ -208,7 +208,15 @@ var NoteTracker = {
   listQ: function (value){
     console.log('value is: ' + value);
   },
-  tagsMenu: function() {
+  tagsDropDown: function() {
+      var menu = '<form>Search By Tags: <select id="noteTags" onchange="NoteTracker.searchForTag(this.value)"><option value="none">None</option>';
+      for (var i = 0; i < userLibrary[userIndex].tagLibrary.length; i++) {
+        menu += '<option value="' + userLibrary[userIndex].tagLibrary[i] + '">' + userLibrary[userIndex].tagLibrary[i] + '</option>';
+      }
+      menu += '</select></form>';
+    return menu;
+  },
+  tagsMultipleSelect: function() {
       var tags = '<form>Search By Tags: <select id="noteTags" onchange="NoteTracker.searchForTag(this.value)"><option value="none">None</option>';
       for (var i = 0; i < userLibrary[userIndex].tagLibrary.length; i++) {
         tags += '<option value="' + userLibrary[userIndex].tagLibrary[i] + '">' + userLibrary[userIndex].tagLibrary[i] + '</option>';
@@ -218,7 +226,7 @@ var NoteTracker = {
   },
   createForm: function() {
     this.clearForm();
-    document.getElementById('displayWindow').innerHTML = '<form id="textInput"><fieldset><legend>Create New Note</legend><label for="noteTitle">Title</label><textarea name="noteTitle"/></textarea><label for="noteTag">Add a Tag</label><input type="text" name="noteTag"/><label for="noteContent">Content</label><textarea name="noteContent"/></textarea><input class="button-primary" type="submit" value="Create New Note"></fieldset></form>' + this.tagsMenu();
+    document.getElementById('displayWindow').innerHTML = '<form id="textInput"><fieldset><legend>Create New Note</legend><label for="noteTitle">Title</label><textarea name="noteTitle"/></textarea><label for="noteTag">Add a Tag</label><input type="text" name="noteTag"/><label for="noteContent">Content</label><textarea name="noteContent"/></textarea><input class="button-primary" type="submit" value="Create New Note"></fieldset></form>' + this.tagsDropDown();
     newNoteInput = document.getElementById('textInput');
     newNoteInput.addEventListener('submit', function(e) {NoteTracker.newNote(e);
     NoteTracker.createForm();},false);
