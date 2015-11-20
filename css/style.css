@@ -1,87 +1,91 @@
 html, body {
   background-color: #333333;
 }
-
+header {
+  background-color: black;
+  font-family: 'Titillium Web', sans-serif;
+  text-transform: uppercase;
+}
+footer {
+  background-color: black;
+  font-family: 'Titillium Web', sans-serif;
+  color: #fff;
+}
+.content {
+  background-image: url('../images/background.jpg');
+  background-position: center;
+  background-size: 100%;
+  background-repeat: none;
+  height: 600px;
+}
+#content {
+  background-image: url('../images/background.jpg');
+  background-position: center;
+  background-size: 100%;
+  background-repeat: none;
+  height: 600px;
+}
 .borders {
 	border: 2px solid black;
 }
-
 h1 {
   color: #FFFFFF;
   margin-bottom: 40px;
 }
-
 nav {
-  margin-top:15px; /*needs to be adjusted*/
+  margin-top:15px;
 }
-
 #topSpacing {
   padding-top: 30px;
 }
-
 #logo {
   height:150px;
   width:150px;
   float:right;
 }
-
 .smallLogo {
   height: 70px;
   width: 70px;
   float:right;
 }
-
 .leftspacing {
 	padding-left: 30px;
 }
-
 .navspacing {
 	margin-left: 30px;
 }
-
-
 #navBrowser {
-    overflow-y: scroll;
-    height: 500px;
-    resize: none;
-    background-color: #ffffff;
+  overflow-y: scroll;
+  height: 500px;
+  resize: none;
+  background-color: #ffffff;
 }
-
 ul {
   list-style: none;
 }
-
 li {
   border: 1px solid black;
   margin-bottom:0px;
   padding-left: 10px;
 }
-
 li:hover {
   background-color: #E0DDD1;
 }
-
 #titleTextArea {
 	min-height:38px;
 	height:40px;
 	width:500px;
-
 }
-
 #textInput {
 	height:500px;
 	width:805px;
   background-color: #ffffff;
   padding-left:30px;
 }
-
 #contentTextArea {
 	width:500px;
 	height:300px;
 }
-
-/*button*/
-
 .button,
 button,
 input[type="submit"],
@@ -117,9 +121,8 @@ input[type="button"].button-primary {
 button.button-primary:hover,
 input[type="submit"].button-primary:hover,
 input[type="reset"].button-primary:hover,
-input[type="button"].button-primary:hover, /*{
-	background-color: #C2281E;
-}*/
+input[type="button"].button-primary:hover,
+
 .button.button-primary:focus,
 button.button-primary:focus,
 input[type="submit"].button-primary:focus,
@@ -132,42 +135,33 @@ input[type="button"].button-primary:focus {
 .alignButtons {
   margin-left:50px;
 }
-
 #tagForm {
-  color: #ffffff;
+  color: #C2281E;
 }
-
 .tagColor {
   color: #000000;
 }
-
 .imageSize {
   height:200px;
   width:200px;
   float: right;
 }
-
 .aboutAlign {
   text-align: center;
 }
-
 .info {
   margin-top:55px;
 }
-
 #noteWrapper {
   background-color: #FFFFFF;
   padding-left: 30px;
 }
-
 .labelColor {
   color: #000000;
 }
-
 .whiteText {
   color:#FFFFFF;
 }
-
 .changeFont {
   font-size: 24px;
 }
