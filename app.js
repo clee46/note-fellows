@@ -38,7 +38,6 @@ function Note (noteTitle, noteContent) {
 }
 // GLOBAL FUNCTIONS
 function newUserForm (event) {
-  // event.preventDefault();
   document.getElementById('loginForm').innerHTML = '';
   document.getElementById('loginForm').innerHTML = '<form name="loginform" class="whiteText" id="newUser"><fieldset><legend>New User</legend><label>Username</label><input class="labelColor" type="text" name="usr" placeholder="username" required="required"><label>Password</label><input class="labelColor" type="password" name="pword" placeholder="password" required="required"><p id="msg"></p><input class="button-primary" type="submit" value="Create New User"></fieldset></form><input class="button-primary" type="submit" value="Switch to Login Page" id="existingButton">';
   var newUserEl = document.getElementById('newUser');
@@ -47,7 +46,6 @@ function newUserForm (event) {
   existingButton.addEventListener('click', function(e) {returnUserForm(e);},false);
 }
 function returnUserForm (event) {
-  // event.preventDefault();
   document.getElementById('loginForm').innerHTML = '';
   document.getElementById('loginForm').innerHTML = '<form name="loginform" class="whiteText" id="returnUser"><fieldset><legend>Returning User</legend><label>Username</label><input class="labelColor" type="text" name="usr" placeholder="username" required="required"><label>Password</label><input class="labelColor" type="password" name="pword" placeholder="password" required="required"><p id="msg"></p><input class="button-primary" type="submit" value="Login"></fieldset></form><input class="button-primary" type="submit" value="Create New User" id="newButton">';
   var returnUserEl = document.getElementById('returnUser');
@@ -192,13 +190,10 @@ var NoteTracker = {
     elTitle.textContent = note.noteTitle;
     elList.appendChild(elTitle);
 
-    var elNote = document.createElement('p');     // note date
+    var elNote = document.createElement('p');     // note tag
     elNote.textContent = note.noteTags;
     elList.appendChild(elNote);
 
-    var elContent = document.createElement('p');    // note content
-    elContent.textContent = note.noteContent;
-    elList.appendChild(elContent);    // append list element to existing list
     el.appendChild(elList);
     noteCount++;
   },
@@ -221,11 +216,6 @@ var NoteTracker = {
       var menu = '<form id="tagForm">Search By Tags: <select id="noteTags" onchange="NoteTracker.searchForTag(this.value)"><option class="tagColor" value="none">None</option>';
       for (var i = 0; i < userLibrary[userIndex].tagLibrary.length; i++) {
         menu += '<option class="tagColor" value="' + userLibrary[userIndex].tagLibrary[i] + '">' + userLibrary[userIndex].tagLibrary[i] + '</option>';
-      // POTENTIAL MERGE ISSUE
-      // userLibrary = JSON.parse(localStorage.getItem('userLibrary'));
-      // var menu = '<form>Search By Tags: <select id="noteTags" onchange="NoteTracker.searchForTag(this.value)"><option value="none">None</option>';
-      // for (var i = 0; i < userLibrary[userIndex].tagLibrary.length; i++) {
-      //   menu += '<option value="' + userLibrary[userIndex].tagLibrary[i] + '">' +userLibrary[userIndex].tagLibrary[i] + '</option>';
       }
       menu += '</select></form>';
     return menu;
@@ -277,9 +267,6 @@ var NoteTracker = {
 
     document.getElementById('displayWindow').innerHTML = '<form id="textInput" class="borders"><fieldset><legend>Create New Note</legend><label for="noteTitle">Title</label><textarea id="titleTextArea" name="noteTitle" required="required" maxlength="66"/></textarea><label for="noteTag">Add a Tag</label><input type="text" name="noteTag" required="required"/><label for="noteContent">Content</label><textarea id="contentTextArea" name="noteContent" style="width:800px; height:150px;" required="required"></textarea><input class="button-primary" type="submit" value="Create New Note"></fieldset></form>' + this.tagsDropDown();
 
-    // POSSIBLE MERGE ISSUE
-    // document.getElementById('displayWindow').innerHTML = '<form id="textInput"><fieldset><legend>Create New Note</legend><label for="noteTitle">Title</label><textarea name="noteTitle" required="required"></textarea><label for="noteTag">Add a Tag</label><input type="text" name="noteTag" required="required"/><label for="noteContent">Content</label><textarea name="noteContent" required="required"></textarea><input class="button-primary" type="submit" value="Create New Note"></fieldset></form>' + this.tagsDropDown();
-
     newNoteInput = document.getElementById('textInput');
     newNoteInput.addEventListener('submit', function(e) {NoteTracker.newNote(e);
     NoteTracker.createForm();},false);
@@ -306,9 +293,8 @@ var NoteTracker = {
     var noteID = tempNoteId;
     this.clearNoteWrapper();
 
-    document.getElementById('displayWindow').innerHTML = '<form id="textInput" class="borders"><fieldset><legend>Edit Note</legend><label for="noteTitle">Title</label><textarea id="titleTextArea" name="noteTitle" maxlength="66">' + userLibrary[this.currentIndex].library[noteID].noteTitle + '</textarea><label for="noteTag">noteTag</label><textarea name="noteTag"></textarea>' + '<label for="noteContent">Content</label><textarea id="contentTextArea" name="noteContent" style="width:800px; height:150px;">' + userLibrary[this.currentIndex].library[noteID].noteContent + '</textarea><input class="button-primary" type="submit" value="Update Note"></fieldset></form>' + this.tagsMultipleSelect();
-    //POSSIBLE MERGE ISSUE
-    // document.getElementById('displayWindow').innerHTML = '<form id="textInput"><fieldset><legend>Edit Note</legend><label for="noteTitle">Title</label><textarea name="noteTitle">' + userLibrary[this.currentIndex].library[noteID].noteTitle + '</textarea><label for="noteTag">noteTag</label><textarea name="noteTag"></textarea><label for="noteContent">Content</label><textarea name="noteContent">' + userLibrary[this.currentIndex].library[noteID].noteContent + '</textarea><input class="button-primary" type="submit" value="Update Note"></fieldset></form>' + this.tagsMultipleSelect();
+    document.getElementById('displayWindow').innerHTML = '<form id="textInput" class="borders"><fieldset><legend>Edit Note</legend><label for="noteTitle">Title</label><textarea id="titleTextArea" name="noteTitle" maxlength="66">' + userLibrary[this.currentIndex].library[noteID].noteTitle + '</textarea><label for="noteTag">noteTag</label><textarea name="noteTag" required="required"></textarea>' + '<label for="noteContent">Content</label><textarea id="contentTextArea" name="noteContent" style="width:800px; height:150px;">' + userLibrary[this.currentIndex].library[noteID].noteContent + '</textarea><input class="button-primary" type="submit" value="Update Note"></fieldset></form>' + this.tagsMultipleSelect();
+
     var newNoteInput = document.getElementById('textInput');
     newNoteInput.addEventListener('submit', function(e) {NoteTracker.updateForm(e);},false);
   },
@@ -338,7 +324,6 @@ var NoteTracker = {
     }
   }
 };
-
 // when notes.html loads, display all of current user's notes and show a new form
 if (document.title === "Note Fellows") {
   NoteTracker.sendAll();
