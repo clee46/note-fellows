@@ -129,6 +129,10 @@ input[type="button"].button-primary:focus {
   background-color: #C2281E;
   border-color: #C2281E; }
 
+.alignButtons {
+  margin-left:50px;
+}
+
 #tagForm {
   color: #ffffff;
 }

@@ -269,7 +269,7 @@ var NoteTracker = {
     for (var i = 0; i < userLibrary[userIndex].tagLibrary.length; i++) {
       menu += '<option value="' + userLibrary[userIndex].tagLibrary[i] + '">' + userLibrary[userIndex].tagLibrary[i] + '</option>';
     }
-    menu += '</select><button onclick="NoteTracker.assignTags();">Assign</button><button onclick="NoteTracker.removeTags();">Remove</button></form>';
+    menu += '</select><button class="button button-primary alignButtons" onclick="NoteTracker.assignTags();">Assign</button><button class="button button-primary alignButtons" onclick="NoteTracker.removeTags();">Remove</button></form>';
     return menu;
   },
   createForm: function() {
