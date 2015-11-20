@@ -9,19 +9,24 @@
 
   <body>
     <header>
-      <nav>
-        <a class="button button-primary" href="index.html">Switch User</a>
-        <a class="button button-primary" href="feedback.html">Feedback</a>
-<!--         <a class="button button-primary" href="#">FAQ</a> -->
-        <a class="button button-primary" href="about.html">About</a>
-      </nav>
+      <div class="row">
+        <div class="one-half column">
+          <nav>
+            <a class="button button-primary navspacing" href="index.html">Logout</a>
+            <a class="button button-primary" href="about.html">About</a>
+          </nav>
+        </div>
+        <div class="one-half column">
+          <img src="images/notefellows.png" class="smallLogo">
+        </div>
+      </div>
     </header>
 
     <main>
       <div id="content">
-        <div class="row">
-          <div class="three columns">
-            <div class="navBrowser">
+        <div class="row" id="topSpacing">
+          <div class="three columns leftspacing">
+            <div class="borders" id="navBrowser">
               <ul id="noteList"></ul>
             </div>
           </div>
@@ -30,10 +35,13 @@
               <fieldset>
                 <legend>Create New Note</legend>
                 <label for="noteTitle">Title</label>
-                <input type="text" name="noteTitle"/>
+                <textarea id="titleTextArea" required name="noteTitle"/></textarea>
+
+                <label for="noteTag">Assign a Tag</label>
+                <input required type="text" name="noteTag"/>
 
                 <label for="noteContent">Content</label>
-                <input type="text" name="noteContent"/>
+                <textarea id="contentTextArea" required name="noteContent" style="width:500px; height:300px;"/></textarea>
 
                 <input class="button-primary" type="submit" value="Create New Note">
               </fieldset>
