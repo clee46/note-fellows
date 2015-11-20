@@ -1,7 +1,26 @@
 html, body {
   background-color: #333333;
-}
 
+}
+.content {
+  background-image: url('../images/background.jpg');
+  background-position: center;
+  background-size: 100%;
+  background-repeat: none;
+  height: 500px;
+}
+#multipleTags {
+  margin-top: 90px;
+}
+#assign {
+  margin-bottom: 60px;
+}
+#remove {
+  margin-bottom: 60px;
+}
+header {
+  border-bottom: 1px solid #000;
+}
 .borders {
 	border: 2px solid black;
 }

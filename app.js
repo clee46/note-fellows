@@ -265,11 +265,11 @@ var NoteTracker = {
     userLibrary = JSON.parse(localStorage.getItem('userLibrary'));
   },
   tagsMultipleSelect: function() {
-    var menu = '<form><select id="multipleTags" size="5" multiple="multiple">';
+    var menu = '<form id="multipleSelect"><select id="multipleTags" size="5" multiple="multiple">';
     for (var i = 0; i < userLibrary[userIndex].tagLibrary.length; i++) {
       menu += '<option value="' + userLibrary[userIndex].tagLibrary[i] + '">' + userLibrary[userIndex].tagLibrary[i] + '</option>';
     }
-    menu += '</select><button onclick="NoteTracker.assignTags();">Assign</button><button onclick="NoteTracker.removeTags();">Remove</button></form>';
+    menu += '</select><button id="assign" onclick="NoteTracker.assignTags();">Assign</button><button id="remove" onclick="NoteTracker.removeTags();">Remove</button></form>';
     return menu;
   },
   createForm: function() {
