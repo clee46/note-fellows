@@ -315,11 +315,14 @@ var NoteTracker = {
   displayNote: function(noteID) {
     this.clearForm();
     tempNoteId = noteID;
-    document.getElementById('displayWindow').innerHTML = '<div id="noteWrapper" class="borders"><h4 class="labelColor">'+ userLibrary[this.currentIndex].library[noteID].noteTitle + '</h4><br/><br/><p class="labelColor">' + userLibrary[this.currentIndex].library[noteID].noteContent + '</p><input class="button-primary navspacing" type="submit" value="Edit Note" id="editbutton"><input class="button-primary navspacing" type="submit" value="Delete" id="deleteButton"></div>';
+    document.getElementById('displayWindow').innerHTML = '<div id="noteWrapper" class="borders"><h4 class="labelColor">'+ userLibrary[this.currentIndex].library[noteID].noteTitle + '</h4><br/><br/><p class="labelColor">' + userLibrary[this.currentIndex].library[noteID].noteContent + '</p><input class="button-primary navspacing" type="submit" value="Edit note" id="editbutton"><input class="button-primary navspacing" type="submit" value="Delete" id="deleteButton"><input class="button-primary navspacing" type="submit" value="New note" id="newNoteButton"></div>';
     var editButton = document.getElementById('editbutton');
     editButton.addEventListener('click', function(e){NoteTracker.editNote(e);}, false);
     var deleteButton = document.getElementById('deleteButton');
     deleteButton.addEventListener('click', function(e){NoteTracker.deleteNote(e);}, false);
+    var newNoteButton = document.getElementById('newNoteButton');
+    newNoteButton.addEventListener('click', function(e){NoteTracker.createForm();}, false);
+
   },
   searchForTag: function (tag) {
     // called by drop-down list menu, sends all notes with a given tag to browser

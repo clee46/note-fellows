@@ -1,9 +1,10 @@
 html, body {
   background-color: #333333;
+  font-family: 'Lato', sans-serif;
 }
 
 .borders {
-	border: 2px solid black;
+  border: 2px solid black;
 }
 
 h1 {
@@ -28,15 +29,17 @@ nav {
 .smallLogo {
   height: 70px;
   width: 70px;
+  padding-right: 10px;
+  padding-top: 2px;
   float:right;
 }
 
 .leftspacing {
-	padding-left: 30px;
+  padding-left: 30px;
 }
 
 .navspacing {
-	margin-left: 30px;
+  margin-left: 30px;
 }
 
 
@@ -52,32 +55,42 @@ ul {
 }
 
 li {
-  border: 1px solid black;
+  border-bottom: 1px solid black;
   margin-bottom:0px;
   padding-left: 10px;
+  padding-top: 10px;
 }
 
 li:hover {
   background-color: #E0DDD1;
 }
 
+#noteList li p:first-child {
+  font-weight: bold;
+}
+
+#noteList li p:nth-child(2) {
+  font-style: italic;
+  font-size: 12px;
+}
+
 #titleTextArea {
-	min-height:38px;
-	height:40px;
-	width:500px;
+  min-height:38px;
+  height:40px;
+  width:500px;
 
 }
 
 #textInput {
-	height:500px;
-	width:805px;
+  height:500px;
+  width:805px;
   background-color: #ffffff;
   padding-left:30px;
 }
 
 #contentTextArea {
-	width:500px;
-	height:300px;
+  width:500px;
+  height:300px;
 }
 
 /*button*/
@@ -118,7 +131,7 @@ button.button-primary:hover,
 input[type="submit"].button-primary:hover,
 input[type="reset"].button-primary:hover,
 input[type="button"].button-primary:hover, /*{
-	background-color: #C2281E;
+  background-color: #C2281E;
 }*/
 .button.button-primary:focus,
 button.button-primary:focus,
@@ -144,6 +157,7 @@ input[type="button"].button-primary:focus {
 .imageSize {
   height:200px;
   width:200px;
+  border: 1px solid #fff;
   float: right;
 }
 
@@ -153,11 +167,17 @@ input[type="button"].button-primary:focus {
 
 .info {
   margin-top:55px;
+  padding-right: 100px;
+}
+
+.info:last-child {
+  padding-bottom: 70px;
 }
 
 #noteWrapper {
   background-color: #FFFFFF;
   padding-left: 30px;
+  padding-top: 10px;
 }
 
 .labelColor {
@@ -170,4 +190,9 @@ input[type="button"].button-primary:focus {
 
 .changeFont {
   font-size: 24px;
+  text-align: left;
+}
+
+legend {
+  padding-top: 20px;
 }
