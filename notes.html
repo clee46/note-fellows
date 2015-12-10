@@ -9,6 +9,9 @@
     <link rel="stylesheet" type="text/css" href="css/module.css">
     <link rel="stylesheet" type="text/css" href="css/state.css">
     <link rel="stylesheet" type="text/css" href="css/theme.css">
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
   </head>
 
   <body>
@@ -29,11 +32,12 @@
     <main>
       <div class="content">
         <div class="row" id="topSpacing">
-          <div class="three columns leftspacing">
+          <div class="four columns leftspacing">
             <div class="borders" id="navBrowser">
               <ul id="noteList"></ul>
             </div>
           </div>
+
           <div class="eight columns" id="displayWindow">
             <form id="textInput">
               <fieldset>
@@ -45,7 +49,7 @@
                 <input required type="text" name="noteTag"/>
 
                 <label for="noteContent">Content</label>
-                <textarea id="contentTextArea" required name="noteContent" style="width:500px; height:300px;"/></textarea>
+                <textarea id="contentTextArea" required name="noteContent"/></textarea>
 
                 <input class="button-primary" type="submit" value="Create New Note">
               </fieldset>
