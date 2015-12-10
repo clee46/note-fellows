@@ -1,0 +1,71 @@
+.borders {
+  border: 2px solid black;
+}
+
+h1 {
+  color: #FFFFFF;
+}
+
+#navBrowser {
+  background-color: #ffffff;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  border-bottom: 1px solid black;
+}
+
+#noteList li p:first-child {
+  font-weight: bold;
+}
+
+#noteList li p:nth-child(2) {
+  font-style: italic;
+  font-size: 12px;
+}
+
+#textInput {
+  background-color: #ffffff;
+}
+
+.button,
+button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+  color: #555;
+  background-color: transparent;
+  border-radius: 4px;
+  border: 1px solid #bbb;
+}
+
+.button.button-primary,
+button.button-primary,
+input[type="submit"].button-primary,
+input[type="reset"].button-primary,
+input[type="button"].button-primary {
+  color: #FFF;
+  background-color: #CF3328;
+  border-color: #CF3328;
+}
+
+#tagForm {
+  color: #C2281E;
+}
+.tagColor {
+  color: #000000;
+}
+
+.labelColor {
+  color: #000000;
+}
+.whiteText {
+  color:#FFFFFF;
+}
+.changeFont {
+  font-size: 24px;
+  text-align: left;
+}
