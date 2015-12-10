@@ -1,0 +1,14 @@
+html, body {
+  background-color: #333333;
+  font-family: 'Lato', sans-serif;
+}
+header {
+  background-color: black;
+  font-family: 'Titillium Web', sans-serif;
+  text-transform: uppercase;
+}
+footer {
+  background-color: black;
+  font-family: 'Titillium Web', sans-serif;
+  color: #fff;
+}
