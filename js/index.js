@@ -1,19 +1,25 @@
 var userLibrary = [];
-var tempNoteId;
+var NoteTracker = {};
 
-if (localStorage.userIndex  && localStorage.userLibrary) {
-  var userIndex = JSON.parse(localStorage.getItem('userIndex'));
+if (localStorage.userIndex && localStorage.userLibrary) {
+  // ????? var userIndex = JSON.parse(localStorage.getItem('userIndex'));
   userLibrary = JSON.parse(localStorage.getItem('userLibrary'));
 }
+
 getLoginTemplate();
 
-
+function User (username, password, library, tagLibrary) {
+  this.username = username;
+  this.password = password;
+  this.library = library;
+  this.tagLibrary = tagLibrary;
+  userLibrary.push(this);
+}
 
 /******************GLOBAL FUNCTIONS***************/
 
 var loginTemplate = '';
 function getLoginTemplate() {
-  console.log('HERE');
   $.get('templates/login.handlebars', function(data) {
     loginTemplate = Handlebars.compile(data);
   }).done(function() {
@@ -34,7 +40,7 @@ function newUserForm() {
 
   $('#newUser button').on('click', function(event) {
     event.preventDefault();
-    newUser(event);
+    newUserLogin($(this));
   });
   $('#existingButton').on('click', function(event) {
     returnUserForm();
@@ -54,7 +60,7 @@ function returnUserForm() {
 
   $('#returnUser button').on('click', function(event) {
     event.preventDefault();
-    returnUser(event);
+    returnUserLogin($(this));
   });
   $('#newButton').on('click', function(event) {
     newUserForm();
@@ -62,49 +68,71 @@ function returnUserForm() {
 }
 
 
-function newUser(event) {
-  event.preventDefault();
-  console.log('it works!');
-  var username = event.target.usr.value;
-  var password = event.target.pword.value;
-  var msg = document.getElementById('msg');
-  var library = [];
-  var tags = [];
-  var userExists = false;
-  for (var i = 0; i < userLibrary.length; i++) {
-    if (userLibrary[i].username === username) {
-      msg.textContent = "Username taken";
-      userExists = true;
+function newUserLogin($btn) {
+  var username = $btn.siblings('[name=usr]').val();
+  var password = $btn.siblings('[name=pword]').val();
+
+  // check empty fields
+  if (!username.length || !password.length) {
+    $('#msg').text('Please enter username and password');
+  } else {
+    var userExists = false;
+    var checkUsernameExists = function(element) {
+      console.log(element);
+      if (username === element.username) {
+        userExists = true;
+      }
+    };
+    userLibrary.forEach(checkUsernameExists);
+
+    if (!userExists) {
+      var temp = new User(username, password, [], []);
+      userLibrary.push(temp);
+      // *****
+      NoteTracker.currentUser = temp;
+      // save to local storage
+      localStorage.setItem('userIndex', JSON.stringify(userLibrary.length - 1));
+      localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
+      // redirect to notes.html
+      redirectTo('/notes.html');
+    } else {
+      $('#msg').text('Username taken');
     }
-  }
-  if (!userExists) {
-    var temp = new User(username, password, library, tags);
-    NoteTracker.currentUser = temp;
-    var x = userLibrary.length - 1;
-    localStorage.setItem('userIndex', JSON.stringify(x));
-    localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
-    // window.location = "notes.html";
-    console.log('here');
   }
 }
 
-function returnUser(event) {
-  event.preventDefault();
-  var username = event.target.usr.value;
-  var password = event.target.pword.value;
-  var msg = document.getElementById('msg');
-  var userExists = false;
-  for (var i = 0; i < userLibrary.length; i++) {
-    if (userLibrary[i].username === username && userLibrary[i].password === password) {
-        NoteTracker.currentUser = userLibrary[i];
-        localStorage.setItem('userIndex', JSON.stringify(i));
-        localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
-        window.location = "notes.html";
-     }
-    if (userLibrary[i].username === username && userLibrary[i].password !== password) {
-        msg.textContent = "Incorrect Password";
+function returnUserLogin($btn) {
+  var username = $btn.siblings('[name=usr]').val();
+  var password = $btn.siblings('[name=pword]').val();
+
+  // check empty fields
+  if (!username.length || !password.length) {
+    $('#msg').text('Please enter username and password');
+  } else {
+    var userExists = false;
+    var checkCorrectLogin = function(element, index) {
+      if (username === element.username) {
+        // username match
         userExists = true;
-     }
-   }
-   if (!userExists) {msg.textContent = "User Does Not Exist";}
+        if (password === element.password) {
+          // password match
+          NoteTracker.currentUser = element;
+          localStorage.setItem('userIndex', JSON.stringify(index));
+          // ??? localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
+          redirectTo('/notes.html');
+        }
+      }
+    };
+    userLibrary.forEach(checkCorrectLogin);
+
+    if (!userExists) {
+      $('#msg').text('User does not exist');
+    } else {
+      $('#msg').text('Incorrect password');
+    }
+  }
 }
+
+var redirectTo = function(path) {
+  $(location).attr('pathname', path);
+};
