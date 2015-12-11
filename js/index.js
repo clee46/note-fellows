@@ -1,74 +1,63 @@
-var userLibrary = [];
-var NoteTracker = {};
+var login = {};
 
-if (localStorage.userIndex && localStorage.userLibrary) {
-  // ????? var userIndex = JSON.parse(localStorage.getItem('userIndex'));
-  userLibrary = JSON.parse(localStorage.getItem('userLibrary'));
-}
+login.retrieveData = function() {
+  if (localStorage.userIndex && localStorage.userLibrary) {
+    // ????? var userIndex = JSON.parse(localStorage.getItem('userIndex'));
+    userLibrary = JSON.parse(localStorage.getItem('userLibrary'));
+  }
+};
 
-getLoginTemplate();
-
-function User (username, password, library, tagLibrary) {
-  this.username = username;
-  this.password = password;
-  this.library = library;
-  this.tagLibrary = tagLibrary;
-  userLibrary.push(this);
-}
-
-/******************GLOBAL FUNCTIONS***************/
-
-var loginTemplate = '';
-function getLoginTemplate() {
+login.showForm = function() {
   $.get('templates/login.handlebars', function(data) {
-    loginTemplate = Handlebars.compile(data);
+    login.template = Handlebars.compile(data);
   }).done(function() {
-    newUserForm();
+    login.showNewUserForm();
   });
 };
 
-function newUserForm() {
+login.showNewUserForm = function() {
   var userElement = {
     formId: 'newUser',
     userType: 'Create New User',
+    submitText: 'Register',
     buttonValue: 'Switch to Login Page',
     buttonId: 'existingButton'
   };
 
-  var compiledHTML = loginTemplate(userElement);
+  var compiledHTML = login.template(userElement);
   $('#loginForm').html(compiledHTML);
 
   $('#newUser button').on('click', function(event) {
     event.preventDefault();
-    newUserLogin($(this));
+    login.checkNewUserLogin($(this));
   });
   $('#existingButton').on('click', function(event) {
-    returnUserForm();
+    login.showReturnUserForm();
   });
-}
+};
 
-function returnUserForm() {
+login.showReturnUserForm = function() {
   var userElement = {
     formId: 'returnUser',
     userType: 'Returning User',
+    submitText: 'Sign in',
     buttonValue: 'Create New User',
     buttonId: 'newButton'
   };
 
-  var compiledHTML = loginTemplate(userElement);
+  var compiledHTML = login.template(userElement);
   $('#loginForm').html(compiledHTML);
 
   $('#returnUser button').on('click', function(event) {
     event.preventDefault();
-    returnUserLogin($(this));
+    login.checkReturnUserLogin($(this));
   });
   $('#newButton').on('click', function(event) {
-    newUserForm();
+    login.showNewUserForm();
   });
-}
+};
 
-
-function newUserLogin($btn) {
+login.checkNewUserLogin = function($btn) {
   var username = $btn.siblings('[name=usr]').val();
   var password = $btn.siblings('[name=pword]').val();
 
@@ -94,14 +83,14 @@ function newUserLogin($btn) {
       localStorage.setItem('userIndex', JSON.stringify(userLibrary.length - 1));
       localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
       // redirect to notes.html
-      redirectTo('/notes.html');
+      util.redirectTo('/notes.html');
     } else {
       $('#msg').text('Username taken');
     }
   }
 }
 
-function returnUserLogin($btn) {
+login.checkReturnUserLogin = function($btn) {
   var username = $btn.siblings('[name=usr]').val();
   var password = $btn.siblings('[name=pword]').val();
 
@@ -119,7 +108,7 @@ function returnUserLogin($btn) {
           NoteTracker.currentUser = element;
           localStorage.setItem('userIndex', JSON.stringify(index));
           // ??? localStorage.setItem('userLibrary', JSON.stringify(userLibrary));
-          redirectTo('/notes.html');
+          util.redirectTo('/notes.html');
         }
       }
     };
@@ -133,6 +122,6 @@ function returnUserLogin($btn) {
   }
 }
 
-var redirectTo = function(path) {
-  $(location).attr('pathname', path);
-};
+$(function() {
+  login.showForm();
+});
