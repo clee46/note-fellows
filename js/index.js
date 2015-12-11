@@ -123,5 +123,6 @@ login.checkReturnUserLogin = function($btn) {
 }
 
 $(function() {
+  login.retrieveData();
   login.showForm();
 });
