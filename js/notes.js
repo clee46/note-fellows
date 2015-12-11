@@ -1,4 +1,3 @@
-var userLibrary = [];
 var tempNoteId;
 
 if (localStorage.userIndex) {
@@ -9,13 +8,7 @@ var el = $('#noteList');
 el.addEventListener('click', function(e) {NoteTracker.getNote(e);},false);
 
 /***************OBJECT CONSTRUCTORS***************/
-function User (username, password, library, tagLibrary) {
-  this.username = username;
-  this.password = password;
-  this.library = library;
-  this.tagLibrary = tagLibrary;
-  userLibrary.push(this);
-}
+// the User constructors has been moved to in global.js
 
 function Note (noteTitle, noteContent) {
   this.noteTitle = noteTitle;
