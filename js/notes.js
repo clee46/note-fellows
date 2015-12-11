@@ -3,7 +3,7 @@ var tempNoteId;
 if (localStorage.userIndex) {
   var userIndex = JSON.parse(localStorage.getItem('userIndex'));
   userLibrary = JSON.parse(localStorage.getItem('userLibrary'));
- }
+}
 
 $('#noteList').on('click', function(e) {
   noteTracker.getNote(e);
@@ -12,7 +12,7 @@ $('#noteList').on('click', function(e) {
 /***************OBJECT CONSTRUCTORS***************/
 // the User constructors has been moved to in global.js
 
-function Note (noteTitle, noteContent) {
+function Note(noteTitle, noteContent) {
   this.noteTitle = noteTitle;
   this.noteContent = noteContent;
   this.noteTags = [];

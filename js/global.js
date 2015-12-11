@@ -2,7 +2,7 @@ var userLibrary = [];
 
 var NoteTracker = {};
 
-function User (username, password, library, tagLibrary) {
+function User(username, password, library, tagLibrary) {
   this.username = username;
   this.password = password;
   this.library = library;

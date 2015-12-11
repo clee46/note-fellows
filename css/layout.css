@@ -1,91 +1,74 @@
 h1 {
   margin-bottom: 40px;
 }
-
 nav {
-  margin-top:15px;
+  margin-top: 15px;
 }
-
 #topSpacing {
   padding-top: 30px;
 }
-
 #logo {
-  height:150px;
-  width:150px;
-  float:right;
+  height: 150px;
+  width: 150px;
+  float: right;
 }
-
 .smallLogo {
   height: 70px;
   width: 70px;
   padding-right: 10px;
   padding-top: 2px;
-  float:right;
+  float: right;
 }
-
 .leftspacing {
   padding-left: 30px;
 }
-
 .navspacing {
   margin-left: 30px;
 }
-
 #navBrowser {
   overflow-y: scroll;
   height: 500px;
   resize: none;
 }
-
 li {
-  margin-bottom:0px;
+  margin-bottom: 0px;
   padding-left: 10px;
   padding-top: 10px;
 }
-
 #titleTextArea {
-  min-height:38px;
-  height:40px;
-  width:500px;
+  min-height: 38px;
+  height: 40px;
+  width: 500px;
 }
-
 #textInput {
-  min-height:500px;
+  min-height: 500px;
   /*width:805px;*/
-  padding-left:30px;
+  padding-left: 30px;
 }
-
 #contentTextArea {
   width: 90%;
 }
-
 .alignButtons {
-  margin-left:50px;
+  margin-left: 50px;
 }
-
 .imageSize {
-  height:200px;
-  width:200px;
+  height: 200px;
+  width: 200px;
   border: 1px solid #fff;
   float: right;
 }
-
 .info {
-  margin-top:55px;
+  margin-top: 55px;
   padding-right: 100px;
 }
-
 .info:last-child {
   padding-bottom: 70px;
 }
-
 #noteWrapper {
   background-color: #FFFFFF;
   padding-left: 30px;
   padding-top: 10px;
 }
-
 legend {
   padding-top: 20px;
 }

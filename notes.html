@@ -1,56 +1,58 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Note Fellows</title>
-    <link rel="stylesheet" type="text/css" href="css/normalize.css">
-    <link rel="stylesheet" type="text/css" href="css/skeleton.css">
-    <link rel="stylesheet" type="text/css" href="css/base.css">
-    <link rel="stylesheet" type="text/css" href="css/layout.css">
-    <link rel="stylesheet" type="text/css" href="css/module.css">
-    <link rel="stylesheet" type="text/css" href="css/state.css">
-    <link rel="stylesheet" type="text/css" href="css/theme.css">
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
-  </head>
+<head>
+  <title>Note Fellows</title>
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/skeleton.css">
+  <link rel="stylesheet" type="text/css" href="css/base.css">
+  <link rel="stylesheet" type="text/css" href="css/layout.css">
+  <link rel="stylesheet" type="text/css" href="css/module.css">
+  <link rel="stylesheet" type="text/css" href="css/state.css">
+  <link rel="stylesheet" type="text/css" href="css/theme.css">
+
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+</head>
+
 <body>
   <div class="site-wrap">
-  <header>
-    <div class="row">
-      <div class="one-half column">
-        <nav>
-          <a class="button button-primary navspacing" href="index.html">Logout</a>
-          <a class="button button-primary" href="about.html">About</a>
-        </nav>
+    <header>
+      <div class="row">
+        <div class="one-half column">
+          <nav>
+            <a class="button button-primary navspacing" href="index.html">Logout</a>
+            <a class="button button-primary" href="about.html">About</a>
+          </nav>
+        </div>
+        <div class="one-half column">
+          <img src="images/notefellows.png" class="smallLogo">
+        </div>
       </div>
-      <div class="one-half column">
-        <img src="images/notefellows.png" class="smallLogo">
-      </div>
-    </div>
-  </header>
-  <main>
-    <div class="content">
-      <div class="row" id="topSpacing">
-        <div class="three columns leftspacing">
-          <div class="borders" id="navBrowser">
-            <aside id="noteList"></aside>
+    </header>
+    <main>
+      <div class="content">
+        <div class="row" id="topSpacing">
+          <div class="three columns leftspacing">
+            <div class="borders" id="navBrowser">
+              <aside id="noteList"></aside>
+            </div>
+          </div>
+          <div class="eight columns" id="displayWindow">
+            <form id="textInput">
+              <fieldset>
+                <legend>Create New Note</legend>
+                <label for="noteTitle">Title</label>
+                <textarea id="titleTextArea" required name="noteTitle" /></textarea>
+                <label for="noteTag">Assign a Tag</label>
+                <input required type="text" name="noteTag" />
+                <label for="noteContent">Content</label>
+                <textarea id="contentTextArea" required name="noteContent" /></textarea>
+                <input class="button-primary" type="submit" value="Create New Note">
+              </fieldset>
+            </form>
           </div>
         </div>
-        <div class="eight columns" id="displayWindow">
-          <form id="textInput">
-            <fieldset>
-              <legend>Create New Note</legend>
-              <label for="noteTitle">Title</label>
-              <textarea id="titleTextArea" required name="noteTitle" /></textarea>
-          <label for="noteTag">Assign a Tag</label>
-              <input required type="text" name="noteTag"/>
-                <label for="noteContent">Content</label>
-                <textarea id="contentTextArea" required name="noteContent"/></textarea>
-                <input class="button-primary" type="submit" value="Create New Note">
-            </fieldset>
-          </form>
-        </div>
-      </div>
     </main>
     <footer>
       &copy; 2015 Note Fellows
@@ -58,5 +60,6 @@
     <!-- <script src="js/app.js" type="text/javascript"></script> -->
     <script src="js/global.js" type="text/javascript"></script>
     <script src="js/notes.js" type="text/javascript"></script>
-  </body>
+</body>
+
 </html>
