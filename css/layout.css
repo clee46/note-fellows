@@ -51,14 +51,13 @@ li {
 }
 
 #textInput {
-  height:500px;
-  width:805px;
+  min-height:500px;
+  /*width:805px;*/
   padding-left:30px;
 }
 
 #contentTextArea {
-  width:500px;
-  height:300px;
+  width: 90%;
 }
 
 .alignButtons {
