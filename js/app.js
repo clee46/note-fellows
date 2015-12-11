@@ -1,19 +1,19 @@
 var userLibrary = [];
 var tempNoteId;
 // this control flow allows us to avoid errors when switching between html pages
-var path = $(location).attr('pathname');
-if (path === '/' || path === '/index.html') {//index.html
+if (document.title === "Welcome to Note Fellows!") {//index.html
   if (localStorage.userIndex  && localStorage.userLibrary) {
     var userIndex = JSON.parse(localStorage.getItem('userIndex'));
     userLibrary = JSON.parse(localStorage.getItem('userLibrary'));
   }
   newUserForm();
-} else if (path === 'notes.html') {// notes.html
+}
+else if (document.title === "Note Fellows") {// notes.html
   if (localStorage.userIndex) {
     var userIndex = JSON.parse(localStorage.getItem('userIndex'));
     userLibrary = JSON.parse(localStorage.getItem('userLibrary'));
    }
-  var el = $('#noteList');
+  var el = document.getElementById('noteList');
   el.addEventListener('click', function(e) {NoteTracker.getNote(e);},false);
 }
 /***************OBJECT CONSTRUCTORS***************/
@@ -241,7 +241,7 @@ var NoteTracker = {
   },
   createForm: function() {
     this.clearForm();
-    document.getElementById('displayWindow').innerHTML = '<form id="textInput" class="borders"><fieldset><legend>Create New Note</legend><label for="noteTitle">Title</label><textarea id="titleTextArea" name="noteTitle" required="required" maxlength="66"/></textarea><label for="noteTag">Add a Tag</label><input type="text" name="noteTag"/><label for="noteContent">Content</label><textarea id="contentTextArea" name="noteContent"  required="required"></textarea><input class="button-primary" type="submit" value="Create New Note"></fieldset></form>' + this.tagsDropDown();
+    document.getElementById('displayWindow').innerHTML = '<form id="textInput" class="borders"><fieldset><legend>Create New Note</legend><label for="noteTitle">Title</label><textarea id="titleTextArea" name="noteTitle" required="required" maxlength="66"/></textarea><label for="noteTag">Add a Tag</label><input type="text" name="noteTag"/><label for="noteContent">Content</label><textarea id="contentTextArea" name="noteContent" style="width:800px; height:150px;" required="required"></textarea><input class="button-primary" type="submit" value="Create New Note"></fieldset></form>' + this.tagsDropDown();
     newNoteInput = document.getElementById('textInput');
     newNoteInput.addEventListener('submit', function(e) {NoteTracker.newNote(e);
     NoteTracker.createForm();},false);
