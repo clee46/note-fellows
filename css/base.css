@@ -1,0 +1,22 @@
+body {
+  background-image: url('../images/background.jpg');
+  background-position: center;
+  background-size: 100%;
+  background-repeat: none;
+}
+header {
+  background-color: black;
+  font-family: 'Titillium Web', sans-serif;
+  text-transform: uppercase;
+}
+footer {
+  background-color: black;
+  font-family: 'Titillium Web', sans-serif;
+  color: #fff;
+}
+.site-wrap {
+  position: relative;
+  background-color: #333333;
+  font-family: 'Lato', sans-serif;
+  left: 0px;
+}
