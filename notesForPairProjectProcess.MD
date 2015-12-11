@@ -2,7 +2,7 @@ Use jQuery for all DOM and event listener code.
   event listeners
   getElementById
 
-Use templates wherever possible.
+Use templates wherever possible. Handlebars.
   log-in
   about
   note-form
